@@ -18,3 +18,25 @@ C:\Users\hp\Documents\ITB\sem 4\STIMA\Tubes3\Tubes3_Fingerfingeran\Algorithm\obj
 C:\Users\hp\Documents\ITB\sem 4\STIMA\Tubes3\Tubes3_Fingerfingeran\Algorithm\obj\Debug\net8.0\Algorithm.pdb
 C:\Users\hp\Documents\ITB\sem 4\STIMA\Tubes3\Tubes3_Fingerfingeran\Algorithm\obj\Debug\net8.0\Algorithm.genruntimeconfig.cache
 C:\Users\hp\Documents\ITB\sem 4\STIMA\Tubes3\Tubes3_Fingerfingeran\Algorithm\obj\Debug\net8.0\ref\Algorithm.dll
+C:\Users\LENOVO\Koding\Semester 4\Strategi Algoritma\Tubes 3\Tubes3_Fingerfingeran\Algorithm\bin\Debug\net8.0\Algorithm.exe
+C:\Users\LENOVO\Koding\Semester 4\Strategi Algoritma\Tubes 3\Tubes3_Fingerfingeran\Algorithm\bin\Debug\net8.0\Algorithm.deps.json
+C:\Users\LENOVO\Koding\Semester 4\Strategi Algoritma\Tubes 3\Tubes3_Fingerfingeran\Algorithm\bin\Debug\net8.0\Algorithm.runtimeconfig.json
+C:\Users\LENOVO\Koding\Semester 4\Strategi Algoritma\Tubes 3\Tubes3_Fingerfingeran\Algorithm\bin\Debug\net8.0\Algorithm.dll
+C:\Users\LENOVO\Koding\Semester 4\Strategi Algoritma\Tubes 3\Tubes3_Fingerfingeran\Algorithm\bin\Debug\net8.0\Algorithm.pdb
+C:\Users\LENOVO\Koding\Semester 4\Strategi Algoritma\Tubes 3\Tubes3_Fingerfingeran\Algorithm\bin\Debug\net8.0\Microsoft.Win32.SystemEvents.dll
+C:\Users\LENOVO\Koding\Semester 4\Strategi Algoritma\Tubes 3\Tubes3_Fingerfingeran\Algorithm\bin\Debug\net8.0\System.Drawing.Common.dll
+C:\Users\LENOVO\Koding\Semester 4\Strategi Algoritma\Tubes 3\Tubes3_Fingerfingeran\Algorithm\bin\Debug\net8.0\runtimes\win\lib\net8.0\Microsoft.Win32.SystemEvents.dll
+C:\Users\LENOVO\Koding\Semester 4\Strategi Algoritma\Tubes 3\Tubes3_Fingerfingeran\Algorithm\obj\Debug\net8.0\Algorithm.csproj.AssemblyReference.cache
+C:\Users\LENOVO\Koding\Semester 4\Strategi Algoritma\Tubes 3\Tubes3_Fingerfingeran\Algorithm\obj\Debug\net8.0\Algorithm.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\LENOVO\Koding\Semester 4\Strategi Algoritma\Tubes 3\Tubes3_Fingerfingeran\Algorithm\obj\Debug\net8.0\Algorithm.AssemblyInfoInputs.cache
+C:\Users\LENOVO\Koding\Semester 4\Strategi Algoritma\Tubes 3\Tubes3_Fingerfingeran\Algorithm\obj\Debug\net8.0\Algorithm.AssemblyInfo.cs
+C:\Users\LENOVO\Koding\Semester 4\Strategi Algoritma\Tubes 3\Tubes3_Fingerfingeran\Algorithm\obj\Debug\net8.0\Algorithm.csproj.CoreCompileInputs.cache
+C:\Users\LENOVO\Koding\Semester 4\Strategi Algoritma\Tubes 3\Tubes3_Fingerfingeran\Algorithm\obj\Debug\net8.0\Algorithm.sourcelink.json
+C:\Users\LENOVO\Koding\Semester 4\Strategi Algoritma\Tubes 3\Tubes3_Fingerfingeran\Algorithm\obj\Debug\net8.0\Algorithm.csproj.Up2Date
+C:\Users\LENOVO\Koding\Semester 4\Strategi Algoritma\Tubes 3\Tubes3_Fingerfingeran\Algorithm\obj\Debug\net8.0\Algorithm.dll
+C:\Users\LENOVO\Koding\Semester 4\Strategi Algoritma\Tubes 3\Tubes3_Fingerfingeran\Algorithm\obj\Debug\net8.0\refint\Algorithm.dll
+C:\Users\LENOVO\Koding\Semester 4\Strategi Algoritma\Tubes 3\Tubes3_Fingerfingeran\Algorithm\obj\Debug\net8.0\Algorithm.pdb
+C:\Users\LENOVO\Koding\Semester 4\Strategi Algoritma\Tubes 3\Tubes3_Fingerfingeran\Algorithm\obj\Debug\net8.0\Algorithm.genruntimeconfig.cache
+C:\Users\LENOVO\Koding\Semester 4\Strategi Algoritma\Tubes 3\Tubes3_Fingerfingeran\Algorithm\obj\Debug\net8.0\ref\Algorithm.dll
+C:\Users\LENOVO\Koding\Semester 4\Strategi Algoritma\Tubes 3\Tubes3_Fingerfingeran\Algorithm\bin\Debug\net8.0\Microsoft.Extensions.Logging.Abstractions.dll
+C:\Users\LENOVO\Koding\Semester 4\Strategi Algoritma\Tubes 3\Tubes3_Fingerfingeran\Algorithm\bin\Debug\net8.0\MySqlConnector.dll

@@ -1,11 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "hUgE+Uoa9S8=",
+  "dgSpecHash": "f6JkzfbpJrs=",
   "success": true,
-  "projectFilePath": "C:\\Users\\hp\\Documents\\ITB\\sem 4\\STIMA\\Tubes3\\Tubes3_Fingerfingeran\\Algorithm\\Algorithm.csproj",
+  "projectFilePath": "C:\\Users\\LENOVO\\Koding\\Semester 4\\Strategi Algoritma\\Tubes 3\\Tubes3_Fingerfingeran\\Algorithm\\Algorithm.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\hp\\.nuget\\packages\\microsoft.win32.systemevents\\8.0.0\\microsoft.win32.systemevents.8.0.0.nupkg.sha512",
-    "C:\\Users\\hp\\.nuget\\packages\\system.drawing.common\\8.0.5\\system.drawing.common.8.0.5.nupkg.sha512"
+    "C:\\Users\\LENOVO\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\7.0.1\\microsoft.extensions.logging.abstractions.7.0.1.nupkg.sha512",
+    "C:\\Users\\LENOVO\\.nuget\\packages\\microsoft.win32.systemevents\\8.0.0\\microsoft.win32.systemevents.8.0.0.nupkg.sha512",
+    "C:\\Users\\LENOVO\\.nuget\\packages\\mysqlconnector\\2.3.7\\mysqlconnector.2.3.7.nupkg.sha512",
+    "C:\\Users\\LENOVO\\.nuget\\packages\\system.drawing.common\\8.0.5\\system.drawing.common.8.0.5.nupkg.sha512"
   ],
   "logs": []
 }

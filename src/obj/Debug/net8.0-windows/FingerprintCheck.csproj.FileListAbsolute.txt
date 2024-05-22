@@ -60,3 +60,10 @@ D:\hirs\Akademik\SEMESTER 4\STIMA\TUBES\Tubes3_Fingerfingeran\src\frontend\obj\D
 D:\hirs\Akademik\SEMESTER 4\STIMA\TUBES\Tubes3_Fingerfingeran\src\frontend\obj\Debug\net8.0-windows\FingerprintCheck.pdb
 D:\hirs\Akademik\SEMESTER 4\STIMA\TUBES\Tubes3_Fingerfingeran\src\frontend\obj\Debug\net8.0-windows\FingerprintCheck.genruntimeconfig.cache
 D:\hirs\Akademik\SEMESTER 4\STIMA\TUBES\Tubes3_Fingerfingeran\src\frontend\obj\Debug\net8.0-windows\ref\FingerprintCheck.dll
+C:\Users\LENOVO\Koding\Semester 4\Strategi Algoritma\Tubes 3\Tubes3_Fingerfingeran\src\obj\Debug\net8.0-windows\MainWindow.g.cs
+C:\Users\LENOVO\Koding\Semester 4\Strategi Algoritma\Tubes 3\Tubes3_Fingerfingeran\src\obj\Debug\net8.0-windows\App.g.cs
+C:\Users\LENOVO\Koding\Semester 4\Strategi Algoritma\Tubes 3\Tubes3_Fingerfingeran\src\obj\Debug\net8.0-windows\FingerprintCheck_MarkupCompile.cache
+C:\Users\LENOVO\Koding\Semester 4\Strategi Algoritma\Tubes 3\Tubes3_Fingerfingeran\src\obj\Debug\net8.0-windows\FingerprintCheck_MarkupCompile.lref
+C:\Users\LENOVO\Koding\Semester 4\Strategi Algoritma\Tubes 3\Tubes3_Fingerfingeran\src\obj\Debug\net8.0-windows\FingerprintCheck.dll
+C:\Users\LENOVO\Koding\Semester 4\Strategi Algoritma\Tubes 3\Tubes3_Fingerfingeran\src\obj\Debug\net8.0-windows\refint\FingerprintCheck.dll
+C:\Users\LENOVO\Koding\Semester 4\Strategi Algoritma\Tubes 3\Tubes3_Fingerfingeran\src\obj\Debug\net8.0-windows\FingerprintCheck.pdb

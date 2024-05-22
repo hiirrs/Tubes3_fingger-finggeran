@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Drawing;
 using System.Text;
+using MySqlConnector;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace FingerprintMatchingApp
 {
@@ -10,46 +13,66 @@ namespace FingerprintMatchingApp
         {
             Console.WriteLine("Enter the path of the first fingerprint image:");
             string? imagePath1 = Console.ReadLine();
-            Console.WriteLine("Enter the path of the second fingerprint image:");
-            string? imagePath2 = Console.ReadLine();
+
+            Console.WriteLine("Enter algorithm (BM or KMP):");
+            string? algorithm = Console.ReadLine();
+
+            string[] imagePathsFromDatabase = GetImagePathsFromDatabase();
 
             try
             {
-                // Convert the entire first image to binary string and then to ASCII
                 string binaryString1 = ImageProcessor.ConvertImageToBinaryString(imagePath1);
                 string asciiString1 = ImageProcessor.ConvertBinaryToAscii(binaryString1);
-
-                // Extract the central 30 characters from the ASCII representation of the first image
                 string asciiBlock1 = ImageProcessor.ExtractCentralAsciiBlock(asciiString1, 30);
 
-                // Convert the entire second image to binary string and then to ASCII
-                string binaryString2 = ImageProcessor.ConvertImageToBinaryString(imagePath2);
-                string asciiString2 = ImageProcessor.ConvertBinaryToAscii(binaryString2);
+                int bestMatchPosition = -1;
+                string bestMatchImagePath = string.Empty;
+                double bestLevenshteinSimilarity = 0;
 
-                // Perform Boyer-Moore string matching
-                BoyerMoore bm = new BoyerMoore(asciiBlock1);
-                int matchPosition = bm.Search(asciiString2);
-
-                KMP kmp = new KMP(asciiBlock1);
-                int matchPosition1 = kmp.Search(asciiString2);
-
-                if (matchPosition != -1 || matchPosition1 != -1)
+                foreach (string imagePath2 in imagePathsFromDatabase)
                 {
-                    if(matchPosition1 != -1)
+                    string binaryString2 = ImageProcessor.ConvertImageToBinaryString(imagePath2);
+                    string asciiString2 = ImageProcessor.ConvertBinaryToAscii(binaryString2);
+                    
+                    int matchPosition = -1;
+                    if (algorithm == "BM")
                     {
-                        Console.WriteLine("Match found at position: " + matchPosition1);
+                        BoyerMoore bm = new BoyerMoore(asciiBlock1);
+                        matchPosition = bm.Search(asciiString2);
                     }
-                    else if(matchPosition != -1)
+                    else if (algorithm == "KMP")
                     {
-                        Console.WriteLine("Match found at position: " + matchPosition);
+                        KMP kmp = new KMP(asciiBlock1);
+                        matchPosition = kmp.Search(asciiString2);
                     }
+
+                    if (matchPosition != -1)
+                    {
+                        bestMatchPosition = matchPosition;
+                        bestMatchImagePath = imagePath2;
+                        break; // Exact match found, exit loop
+                    }
+                    else
+                    {
+                        double levenshteinSimilarity = Levenshtein.CalculateLevenshteinBlockString(asciiBlock1, asciiString2);
+                        if (levenshteinSimilarity > bestLevenshteinSimilarity)
+                        {
+                            bestLevenshteinSimilarity = levenshteinSimilarity;
+                            bestMatchImagePath = imagePath2;
+                        }
+                    }
+                }
+
+                if (bestMatchPosition != -1)
+                {
+                    Console.WriteLine("Match found at position: " + bestMatchPosition);
+                    Console.WriteLine("Matching image path: " + bestMatchImagePath);
                 }
                 else
                 {
-                    Console.WriteLine("No exact match found. Calculating similarity using Levenshtein distance...");
-                    // Calculate similarity based on Levenshtein distance
-                    double levenshteinSimilarity = CalculateLevenshteinSimilarity(asciiBlock1, asciiString2);
-                    Console.WriteLine($"Levenshtein similarity percentage: {levenshteinSimilarity:F2}%");
+                    Console.WriteLine("No exact match found. Best similarity match:");
+                    Console.WriteLine("Image path: " + bestMatchImagePath);
+                    Console.WriteLine($"Levenshtein similarity percentage: {bestLevenshteinSimilarity:F2}%");
                 }
             }
             catch (Exception ex)
@@ -92,7 +115,7 @@ namespace FingerprintMatchingApp
             // Function to find the closest match for abbreviations
             string ClosestMatch(string word)
             {
-                var distances = originalWords.Select(original => new { Original = original, Distance = ComputeLevenshteinDistance(word, original) }).ToList();
+                var distances = originalWords.Select(original => new { Original = original, Distance = Levenshtein.ComputeLevenshteinDistance(word, original) }).ToList();
                 var closest = distances.OrderBy(x => x.Distance).First();
                 return closest.Distance <= 2 ? closest.Original : word;
             }
@@ -103,36 +126,31 @@ namespace FingerprintMatchingApp
             return string.Join(" ", fixedWords);
         }
 
-        static double CalculateLevenshteinSimilarity(string s1, string s2)
+        private static string[] GetImagePathsFromDatabase()
         {
-            int distance = ComputeLevenshteinDistance(s1, s2);
-            int maxLen = Math.Max(s1.Length, s2.Length);
-            return (1.0 - (double)distance / maxLen) * 100;
-        }
+            string connectionString = "server=localhost;user=root;password=12345;database=tubes3_stima24";
+            string query = "SELECT berkas_citra FROM sidik_jari";
 
-        static int ComputeLevenshteinDistance(string s1, string s2)
-        {
-            int[,] d = new int[s1.Length + 1, s2.Length + 1];
+            List<string> imagePaths = new List<string>();
 
-            for (int i = 0; i <= s1.Length; i++)
+            using (var connection = new MySqlConnection(connectionString))
             {
-                d[i, 0] = i;
-            }
-            for (int j = 0; j <= s2.Length; j++)
-            {
-                d[0, j] = j;
-            }
+                connection.Open();
 
-            for (int i = 1; i <= s1.Length; i++)
-            {
-                for (int j = 1; j <= s2.Length; j++)
+                using (var command = new MySqlCommand(query, connection))
                 {
-                    int cost = (s1[i - 1] == s2[j - 1]) ? 0 : 1;
-                    d[i, j] = Math.Min(Math.Min(d[i - 1, j] + 1, d[i, j - 1] + 1), d[i - 1, j - 1] + cost);
+                    using (var reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            string imagePath = reader.GetString("berkas_citra");
+                            imagePaths.Add(imagePath);
+                        }
+                    }
                 }
             }
 
-            return d[s1.Length, s2.Length];
+            return imagePaths.ToArray();
         }
     }
 }
@@ -263,6 +281,60 @@ public class BoyerMoore
         }
         return -1;
     }
+}
+
+public class Levenshtein {
+        public static double CalculateLevenshteinBlockString(string block, string str) 
+        {
+            int blockLength = block.Length;
+            int strLength = str.Length;
+        
+            double maxPercentage = double.MinValue;
+
+            for (int i = 0; i <= strLength - blockLength; i++)
+            {
+                string substring = str.Substring(i, blockLength);
+                double distance = CalculateLevenshteinSimilarity(block, substring);
+                if (distance > maxPercentage)
+                {
+                    maxPercentage = distance;
+                }
+            }
+
+            return maxPercentage;
+        }
+
+        public static double CalculateLevenshteinSimilarity(string s1, string s2)
+        {
+            int distance = ComputeLevenshteinDistance(s1, s2);
+            int maxLen = Math.Max(s1.Length, s2.Length);
+            return (1.0 - (double)distance / maxLen) * 100;
+        }
+
+        public static int ComputeLevenshteinDistance(string s1, string s2)
+        {
+            int[,] d = new int[s1.Length + 1, s2.Length + 1];
+
+            for (int i = 0; i <= s1.Length; i++)
+            {
+                d[i, 0] = i;
+            }
+            for (int j = 0; j <= s2.Length; j++)
+            {
+                d[0, j] = j;
+            }
+
+            for (int i = 1; i <= s1.Length; i++)
+            {
+                for (int j = 1; j <= s2.Length; j++)
+                {
+                    int cost = (s1[i - 1] == s2[j - 1]) ? 0 : 1;
+                    d[i, j] = Math.Min(Math.Min(d[i - 1, j] + 1, d[i, j - 1] + 1), d[i - 1, j - 1] + cost);
+                }
+            }
+
+            return d[s1.Length, s2.Length];
+        }
 }
 
 public static class ImageProcessor

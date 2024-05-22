@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "hUgE+Uoa9S8=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\hp\\Documents\\ITB\\sem 4\\STIMA\\Tubes3\\Tubes3_Fingerfingeran\\Algorithm\\Algorithm.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\hp\\.nuget\\packages\\microsoft.win32.systemevents\\8.0.0\\microsoft.win32.systemevents.8.0.0.nupkg.sha512",
+    "C:\\Users\\hp\\.nuget\\packages\\system.drawing.common\\8.0.5\\system.drawing.common.8.0.5.nupkg.sha512"
+  ],
+  "logs": []
+}

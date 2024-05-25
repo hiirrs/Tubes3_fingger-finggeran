@@ -4,6 +4,8 @@ using System.Text;
 using MySqlConnector;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
+
 
 namespace FingerprintMatchingApp
 {
@@ -80,52 +82,51 @@ namespace FingerprintMatchingApp
                 Console.WriteLine("An error occurred: " + ex.Message);
             }
 
+            List<string> correctNames = new List<string>
+            {
+                "Bintang Dwi Marthen", "Kayla Dyara", "Zahira Dina Amalia"
+            };
+
             Console.WriteLine("Nama Alay:");
             string? namaAlay = Console.ReadLine();
             if (!string.IsNullOrEmpty(namaAlay))
             {
-                Console.WriteLine($"Fixed: {AlayFixer(namaAlay)}");
+                Console.WriteLine($"Fixed: {AlayFixer.FixAlayText(namaAlay, correctNames)}");
             }
         }
 
-        public static string AlayFixer(string text)
+        public static class AlayFixer
         {
-            Dictionary<char, char> numberSubs = new Dictionary<char, char>
+            public static string FixAlayText(string text, List<string> correctNames)
             {
-                {'1', 'i'}, {'4', 'a'}, {'6', 'g'}, {'0', 'o'}, {'3', 'e'}, {'7', 't'}, {'8', 'b'}, {'5', 's'}, {'9', 'p'}
-            };
-
-            string originalString = "Bintang Dwi Marthen";
-            List<string> originalWords = originalString.ToLower().Split(' ').ToList();
-
-            // Fix number substitutions and lowercasing
-            char[] fixedTextChars = text.ToLower().ToCharArray();
-            for (int i = 0; i < fixedTextChars.Length; i++)
-            {
-                if (numberSubs.ContainsKey(fixedTextChars[i]))
+                Dictionary<char, char> numberSubs = new Dictionary<char, char>
                 {
-                    fixedTextChars[i] = numberSubs[fixedTextChars[i]];
+                    {'1', 'i'}, {'4', 'a'}, {'6', 'g'}, {'0', 'o'}, {'3', 'e'}, {'7', 't'}, {'8', 'b'}, {'5', 's'}, {'9', 'p'}
+                };
+
+                // Fix number substitutions and lowercasing
+                string fixedText = Regex.Replace(text, "[143678059]", match => numberSubs[match.Value[0]].ToString());
+                fixedText = fixedText.ToLower();
+
+                // Function to find the closest match for the entire string
+                string ClosestMatch(string input, List<string> names)
+                {
+                    var similarities = names.Select(name => new
+                    {
+                        Name = name,
+                        Similarity = Levenshtein.CalculateLevenshteinSimilarity(input, name.ToLower())
+                    }).ToList();
+
+                    var closest = similarities.OrderByDescending(x => x.Similarity).First();
+                    return closest.Name;
                 }
+
+                // Correct the entire text
+                string correctedText = ClosestMatch(fixedText, correctNames);
+
+                return correctedText;
             }
-            string fixedText = new string(fixedTextChars);
-
-            // Split text into words for abbreviation fixing
-            List<string> words = fixedText.Split(' ').ToList();
-
-            // Function to find the closest match for abbreviations
-            string ClosestMatch(string word)
-            {
-                var distances = originalWords.Select(original => new { Original = original, Distance = Levenshtein.ComputeLevenshteinDistance(word, original) }).ToList();
-                var closest = distances.OrderBy(x => x.Distance).First();
-                return closest.Distance <= 2 ? closest.Original : word;
-            }
-
-            // Fix abbreviations using Levenshtein distance
-            List<string> fixedWords = words.Select(word => ClosestMatch(word)).ToList();
-
-            return string.Join(" ", fixedWords);
         }
-
         private static string[] GetImagePathsFromDatabase()
         {
             string connectionString = "server=localhost;user=root;password=12345;database=tubes3_stima24";

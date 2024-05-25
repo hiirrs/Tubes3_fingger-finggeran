@@ -82,10 +82,7 @@ namespace FingerprintMatchingApp
                 Console.WriteLine("An error occurred: " + ex.Message);
             }
 
-            List<string> correctNames = new List<string>
-            {
-                "Bintang Dwi Marthen", "Kayla Dyara", "Zahira Dina Amalia"
-            };
+            List<string> correctNames = GetCorrectNamesFromDatabase();
 
             Console.WriteLine("Nama Alay:");
             string? namaAlay = Console.ReadLine();
@@ -152,6 +149,33 @@ namespace FingerprintMatchingApp
             }
 
             return imagePaths.ToArray();
+        }
+
+        private static List<string> GetCorrectNamesFromDatabase()
+        {
+            string connectionString = "server=localhost;user=root;password=12345;database=tubes3_stima24";
+            string query = "SELECT nama FROM sidik_jari";
+
+            List<string> correctNames = new List<string>();
+
+            using (var connection = new MySqlConnection(connectionString))
+            {
+                connection.Open();
+
+                using (var command = new MySqlCommand(query, connection))
+                {
+                    using (var reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            string correctName = reader.GetString("nama");
+                            correctNames.Add(correctName);
+                        }
+                    }
+                }
+            }
+
+            return correctNames;
         }
     }
 }

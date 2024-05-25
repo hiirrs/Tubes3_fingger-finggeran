@@ -32,46 +32,46 @@
         </Style>
     </Window.Resources>
     <Grid Style="{StaticResource Base}">
-        <Image Source="D:\hirs\Akademik\SEMESTER 4\STIMA\TUBES\Tubes3_Fingerfingeran\src\assets\home.png" Stretch="UniformToFill" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="70, 25, 0, 0" Width="30" Height="33"/>
-        <Image Source="D:\hirs\Akademik\SEMESTER 4\STIMA\TUBES\Tubes3_Fingerfingeran\src\assets\title.png" Stretch="UniformToFill" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="120, 30, 0, 0" Width="622" Height="29"/>
+        <Image Source="D:\Akademik\SEMESTER 4\STIMA\TUBES\Tubes3_Fingerfingeran\src\assets\Home.png" Stretch="UniformToFill" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="70, 25, 0, 0" Width="30" Height="33"/>
+        <Image Source="D:\Akademik\SEMESTER 4\STIMA\TUBES\Tubes3_Fingerfingeran\src\assets\title.png" Stretch="UniformToFill" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="120, 30, 0, 0" Width="622" Height="29"/>
         <!-- Insert Image Section -->
         
-        <Image Source="D:\hirs\Akademik\SEMESTER 4\STIMA\TUBES\Tubes3_Fingerfingeran\src\assets\PictInsert.png" 
+        <Image Source="D:\Akademik\SEMESTER 4\STIMA\TUBES\Tubes3_Fingerfingeran\src\assets\PictInsert.png" 
                Stretch="UniformToFill" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="50, 140" Width="190" Height="220"/>
         <Grid HorizontalAlignment="Left" VerticalAlignment="Top">
             <Image Name="ChosenImage" Width="170" Height="200" Stretch="Uniform" Margin="56, 137" Panel.ZIndex="1"/>
         </Grid>
         <Grid HorizontalAlignment="Left" VerticalAlignment="Top" Margin="70, 90, 10, 20">
             <Button Style="{StaticResource CustomButton}" Width="150" Height="27" Click="ChoosePictureButton_Click">
-                <Image Source="D:\hirs\Akademik\SEMESTER 4\STIMA\TUBES\Tubes3_Fingerfingeran\src\assets\choosePict.png" Stretch="Uniform"  Width="140" Height="27"/>
+                <Image Source="D:\Akademik\SEMESTER 4\STIMA\TUBES\Tubes3_Fingerfingeran\src\assets\choosePict.png" Stretch="Uniform"  Width="140" Height="27"/>
             </Button>
         </Grid>
         <Grid HorizontalAlignment="Left" VerticalAlignment="Top" Margin="70, 400, 10, 20">
             <Button Style="{StaticResource CustomButton}" Width="150" Height="27" Click="SearchButton_Click">
-                <Image Source="D:\hirs\Akademik\SEMESTER 4\STIMA\TUBES\Tubes3_Fingerfingeran\src\assets\search.png" Stretch="Uniform" Width="140" Height="27"/>
+                <Image Source="D:\Akademik\SEMESTER 4\STIMA\TUBES\Tubes3_Fingerfingeran\src\assets\search.png" Stretch="Uniform" Width="140" Height="27"/>
             </Button>
         </Grid>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="50,350,0,0">
-            <Image Source="D:\hirs\Akademik\SEMESTER 4\STIMA\TUBES\Tubes3_Fingerfingeran\src\assets\Algorithm.png" Width="87" Height="20" Margin="0,0,5,0"/>
+            <Image Source="D:\Akademik\SEMESTER 4\STIMA\TUBES\Tubes3_Fingerfingeran\src\assets\Algorithm.png" Width="87" Height="20" Margin="0,0,5,0"/>
             <RadioButton Content="KMP" Margin="10"/>
             <RadioButton Content="BM" Margin="10"/>
         </StackPanel>
         <!-- Before -->
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="270,80,0,0">
-            <Image Source="D:\hirs\Akademik\SEMESTER 4\STIMA\TUBES\Tubes3_Fingerfingeran\src\assets\screenBefore.png" Width="498" Height="360" Margin="0,0,5,0"/>
+            <Image Source="D:\Akademik\SEMESTER 4\STIMA\TUBES\Tubes3_Fingerfingeran\src\assets\screenBefore.png" Width="498" Height="360" Margin="0,0,5,0"/>
         </StackPanel>
         <!-- Loading -->
         <Grid x:Name="LoadingScreen" Visibility="Collapsed" Margin="260,58,0,0">
-            <Image Source="D:\hirs\Akademik\SEMESTER 4\STIMA\TUBES\Tubes3_Fingerfingeran\src\assets\loadingScreen.png" Stretch="UniformToFill" HorizontalAlignment="Center" VerticalAlignment="Center" Width="498" Height="360" Margin="0,0,5,0"/>
+            <Image Source="D:\Akademik\SEMESTER 4\STIMA\TUBES\Tubes3_Fingerfingeran\src\assets\loadingScreen.png" Stretch="UniformToFill" HorizontalAlignment="Center" VerticalAlignment="Center" Width="498" Height="360" Margin="0,0,5,0"/>
         </Grid>
         <!-- Result -->
         <Grid x:Name="SearchResult" Visibility="Collapsed" Margin="260,58,0,0">
             <TextBlock x:Name="ResultText" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontWeight="Bold" Foreground="Black"/>
-            <Image Source="D:\hirs\Akademik\SEMESTER 4\STIMA\TUBES\Tubes3_Fingerfingeran\src\assets\BGResults.png" Stretch="UniformToFill" HorizontalAlignment="Center" VerticalAlignment="Center" Width="498" Height="360" Margin="0,0,5,0"/>
+            <Image Source="D:\Akademik\SEMESTER 4\STIMA\TUBES\Tubes3_Fingerfingeran\src\assets\BGResults.png" Stretch="UniformToFill" HorizontalAlignment="Center" VerticalAlignment="Center" Width="498" Height="360" Margin="0,0,5,0"/>
             <Grid HorizontalAlignment="Left" VerticalAlignment="Top">
                 <Image Name="ResultImage" Width="190" Height="220" Stretch="Uniform" Margin="56, 137" Panel.ZIndex="1"/>
             </Grid>
-            <Image Source="D:\hirs\Akademik\SEMESTER 4\STIMA\TUBES\Tubes3_Fingerfingeran\src\assets\PictRes.png" Stretch="UniformToFill" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="42, 80" Width="190" Height="190"/>
+            <Image Source="D:\Akademik\SEMESTER 4\STIMA\TUBES\Tubes3_Fingerfingeran\src\assets\PictRes.png" Stretch="UniformToFill" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="42, 80" Width="190" Height="190"/>
         </Grid>
     </Grid>
 </Window>

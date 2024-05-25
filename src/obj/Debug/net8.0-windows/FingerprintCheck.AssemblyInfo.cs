@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("FingerprintCheck")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c5da344035190086a47573053241905160854323")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b3a2910fed14f861add02d44c782657a2ce7c876")]
 [assembly: System.Reflection.AssemblyProductAttribute("FingerprintCheck")]
 [assembly: System.Reflection.AssemblyTitleAttribute("FingerprintCheck")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

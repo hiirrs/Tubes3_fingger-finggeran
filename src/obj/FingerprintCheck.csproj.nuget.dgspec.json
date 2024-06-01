@@ -1,10 +1,10 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\hp\\Downloads\\Tubes3_Fingerfingeran\\src\\FingerprintCheck.csproj": {}
+    "C:\\Users\\LENOVO\\Koding\\Semester 4\\Strategi Algoritma\\Tubes 3\\Tubes3_Fingerfingeran\\src\\FingerprintCheck.csproj": {}
   },
   "projects": {
-    "C:\\Users\\hp\\Downloads\\Tubes3_Fingerfingeran\\src\\FingerprintCheck.csproj": {
+    "C:\\Users\\LENOVO\\Koding\\Semester 4\\Strategi Algoritma\\Tubes 3\\Tubes3_Fingerfingeran\\src\\FingerprintCheck.csproj": {
       "version": "1.0.0",
       "restore": {
         "projectUniqueName": "C:\\Users\\LENOVO\\Koding\\Semester 4\\Strategi Algoritma\\Tubes 3\\Tubes3_Fingerfingeran\\src\\FingerprintCheck.csproj",
@@ -13,9 +13,6 @@
         "packagesPath": "C:\\Users\\LENOVO\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\LENOVO\\Koding\\Semester 4\\Strategi Algoritma\\Tubes 3\\Tubes3_Fingerfingeran\\src\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
           "C:\\Users\\LENOVO\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
@@ -23,8 +20,6 @@
           "net8.0-windows"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {

@@ -21,11 +21,72 @@ namespace FingerprintMatchingApp
 
             string[] imagePathsFromDatabase = GetImagePathsFromDatabase();
 
+            // try
+            // {
+            //     string binaryString1 = ImageProcessor.ConvertImageToBinaryString(imagePath1);
+            //     string asciiString1 = ImageProcessor.ConvertBinaryToAscii(binaryString1);
+            //     string asciiBlock1 = ImageProcessor.ExtractCentralAsciiBlock(asciiString1, 30);
+
+            //     int bestMatchPosition = -1;
+            //     string bestMatchImagePath = string.Empty;
+            //     double bestLevenshteinSimilarity = 0;
+
+            //     foreach (string imagePath2 in imagePathsFromDatabase)
+            //     {
+            //         string binaryString2 = ImageProcessor.ConvertImageToBinaryString(imagePath2);
+            //         string asciiString2 = ImageProcessor.ConvertBinaryToAscii(binaryString2);
+                    
+            //         int matchPosition = -1;
+            //         if (algorithm == "BM")
+            //         {
+            //             BoyerMoore bm = new BoyerMoore(asciiBlock1);
+            //             matchPosition = bm.Search(asciiString2);
+            //         }
+            //         else if (algorithm == "KMP")
+            //         {
+            //             KMP kmp = new KMP(asciiBlock1);
+            //             matchPosition = kmp.Search(asciiString2);
+            //         }
+
+            //         if (matchPosition != -1)
+            //         {
+            //             bestMatchPosition = matchPosition;
+            //             bestMatchImagePath = imagePath2;
+            //             break; // Exact match found, exit loop
+            //         }
+            //         else
+            //         {
+            //             double levenshteinSimilarity = Levenshtein.CalculateLevenshteinBlockString(asciiBlock1, asciiString2);
+            //             if (levenshteinSimilarity > bestLevenshteinSimilarity)
+            //             {
+            //                 bestLevenshteinSimilarity = levenshteinSimilarity;
+            //                 bestMatchImagePath = imagePath2;
+            //             }
+            //         }
+            //     }
+
+            //     if (bestMatchPosition != -1)
+            //     {
+            //         Console.WriteLine("Match found at position: " + bestMatchPosition);
+            //         Console.WriteLine("Matching image path: " + bestMatchImagePath);
+            //     }
+            //     else
+            //     {
+            //         Console.WriteLine("No exact match found. Best similarity match:");
+            //         Console.WriteLine("Image path: " + bestMatchImagePath);
+            //         Console.WriteLine($"Levenshtein similarity percentage: {bestLevenshteinSimilarity:F2}%");
+            //     }
+            // }
+            // catch (Exception ex)
+            // {
+            //     Console.WriteLine("An error occurred: " + ex.Message);
+            // }
+
             try
             {
-                string binaryString1 = ImageProcessor.ConvertImageToBinaryString(imagePath1);
-                string asciiString1 = ImageProcessor.ConvertBinaryToAscii(binaryString1);
-                string asciiBlock1 = ImageProcessor.ExtractCentralAsciiBlock(asciiString1, 30);
+                List<string> binaryStrings1 = ImageProcessor.ConvertImageToBinaryString2(imagePath1);
+                List<string> asciiStrings1 = ImageProcessor.ConvertBinaryToAscii2(binaryStrings1);
+                string asciiBlock1 = ImageProcessor.ExtractCentralAsciiBlock2(asciiStrings1, 30);
 
                 int bestMatchPosition = -1;
                 string bestMatchImagePath = string.Empty;
@@ -33,19 +94,29 @@ namespace FingerprintMatchingApp
 
                 foreach (string imagePath2 in imagePathsFromDatabase)
                 {
-                    string binaryString2 = ImageProcessor.ConvertImageToBinaryString(imagePath2);
-                    string asciiString2 = ImageProcessor.ConvertBinaryToAscii(binaryString2);
+                    List<string> binaryStrings2 = ImageProcessor.ConvertImageToBinaryString2(imagePath2);
+                    List<string> asciiStrings2 = ImageProcessor.ConvertBinaryToAscii2(binaryStrings2);
                     
                     int matchPosition = -1;
                     if (algorithm == "BM")
                     {
                         BoyerMoore bm = new BoyerMoore(asciiBlock1);
-                        matchPosition = bm.Search(asciiString2);
+                        foreach (string asciiString2 in asciiStrings2) {
+                            matchPosition = bm.Search(asciiString2);
+                            if (matchPosition != -1) {
+                                break;
+                            }
+                        }
                     }
                     else if (algorithm == "KMP")
                     {
                         KMP kmp = new KMP(asciiBlock1);
-                        matchPosition = kmp.Search(asciiString2);
+                        foreach (string asciiString2 in asciiStrings2) {
+                            matchPosition = kmp.Search(asciiString2);
+                            if (matchPosition != -1) {
+                                break;
+                            }
+                        }
                     }
 
                     if (matchPosition != -1)
@@ -56,7 +127,10 @@ namespace FingerprintMatchingApp
                     }
                     else
                     {
-                        double levenshteinSimilarity = Levenshtein.CalculateLevenshteinBlockString(asciiBlock1, asciiString2);
+                        double levenshteinSimilarity = 0;
+                        foreach (string asciiString2 in asciiStrings2) {
+                            levenshteinSimilarity = Levenshtein.CalculateLevenshteinBlockString(asciiBlock1, asciiString2);
+                        }
                         if (levenshteinSimilarity > bestLevenshteinSimilarity)
                         {
                             bestLevenshteinSimilarity = levenshteinSimilarity;
@@ -413,5 +487,73 @@ public static class ImageProcessor
         int center = asciiString.Length / 2;
         int start = Math.Max(0, center - length / 2);
         return asciiString.Substring(start, Math.Min(length, asciiString.Length - start));
+    }
+
+    public static List<string> ConvertImageToBinaryString2(string imagePath)
+    {
+        try
+        {
+            using (Bitmap bitmap = new Bitmap(imagePath))
+            {
+                List<string> binaryStrings = new List<string>();
+
+                for (int y = 0; y < bitmap.Height; y++)
+                {
+                    StringBuilder rowString = new StringBuilder();
+
+                    for (int x = 0; x < bitmap.Width; x++)
+                    {
+                        Color pixelColor = bitmap.GetPixel(x, y);
+                        int gray = (pixelColor.R + pixelColor.G + pixelColor.B) / 3;
+                        rowString.Append(gray < 128 ? "0" : "1");
+                    }
+
+                    binaryStrings.Add(rowString.ToString());
+                }
+
+                return binaryStrings;
+            }
+        }
+        catch (Exception ex)
+        {
+            throw new ArgumentException($"Error processing image at path {imagePath}: {ex.Message}");
+        }
+    }
+    
+    public static List<string> ConvertBinaryToAscii2(List<string> binaryStrings)
+    {
+        int rows = binaryStrings.Count;
+        int cols = binaryStrings[0].Length;
+        List<string> asciiStrings = new List<string>();
+
+        for (int y = 0; y < rows - 7; y++)
+        {
+            StringBuilder rowString = new StringBuilder();
+
+            for (int x = 0; x < cols; x++)
+            {
+                StringBuilder binaryChunk = new StringBuilder();
+                for (int i = 0; i < 8; i++)
+                {
+                    binaryChunk.Append(binaryStrings[y + i][x]);
+                }
+
+                char asciiChar = (char)Convert.ToInt32(binaryChunk.ToString(), 2);
+                rowString.Append(asciiChar);
+            }
+
+            asciiStrings.Add(rowString.ToString());
+        }
+
+        return asciiStrings;
+    }
+
+    public static string ExtractCentralAsciiBlock2(List<string> asciiStrings, int length)
+    {
+        int middleIndex = asciiStrings.Count / 2;
+        string middleString = asciiStrings[middleIndex];
+        int center = middleString.Length / 2;
+        int start = Math.Max(0, center - length / 2);
+        return middleString.Substring(start, Math.Min(length, middleString.Length - start));
     }
 }

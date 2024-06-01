@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\hp\\Downloads\\Tubes3_Fingerfingeran\\Algorithm\\Algorithm.csproj": {}
+    "C:\\Users\\LENOVO\\Koding\\Semester 4\\Strategi Algoritma\\Tubes 3\\Tubes3_Fingerfingeran\\Algorithm\\Algorithm.csproj": {}
   },
   "projects": {
-    "C:\\Users\\hp\\Downloads\\Tubes3_Fingerfingeran\\Algorithm\\Algorithm.csproj": {
+    "C:\\Users\\LENOVO\\Koding\\Semester 4\\Strategi Algoritma\\Tubes 3\\Tubes3_Fingerfingeran\\Algorithm\\Algorithm.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\hp\\Downloads\\Tubes3_Fingerfingeran\\Algorithm\\Algorithm.csproj",
+        "projectUniqueName": "C:\\Users\\LENOVO\\Koding\\Semester 4\\Strategi Algoritma\\Tubes 3\\Tubes3_Fingerfingeran\\Algorithm\\Algorithm.csproj",
         "projectName": "Algorithm",
-        "projectPath": "C:\\Users\\hp\\Downloads\\Tubes3_Fingerfingeran\\Algorithm\\Algorithm.csproj",
-        "packagesPath": "C:\\Users\\hp\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\hp\\Downloads\\Tubes3_Fingerfingeran\\Algorithm\\obj\\",
+        "projectPath": "C:\\Users\\LENOVO\\Koding\\Semester 4\\Strategi Algoritma\\Tubes 3\\Tubes3_Fingerfingeran\\Algorithm\\Algorithm.csproj",
+        "packagesPath": "C:\\Users\\LENOVO\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\LENOVO\\Koding\\Semester 4\\Strategi Algoritma\\Tubes 3\\Tubes3_Fingerfingeran\\Algorithm\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\hp\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\LENOVO\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"

@@ -9,6 +9,17 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
+            "program": "${workspaceFolder}/Algorithm/bin/Debug/net8.0/Algorithm.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/Algorithm",
+            "stopAtEntry": false,
+            "console": "internalConsole"
+        },
+        {
+            "name": ".NET Core Launch (console)",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
             "program": "${workspaceFolder}/src/bin/Debug/net8.0-windows/FingerprintCheck.dll",
             "args": [],
             "cwd": "${workspaceFolder}/src",

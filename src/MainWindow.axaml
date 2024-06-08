@@ -25,7 +25,7 @@
             <Button x:Name="choosePictureButton" Content="Choose Picture" HorizontalAlignment="Center"/>
             <Border Margin="10" Width="300" Height="300">
                  <Border.Background>
-                    <ImageBrush Source="D:\Akademik\SEMESTER 4\STIMA\TUBESTubes3_Fingerfingeran\src\Assets\Insert.png"/>
+                    <ImageBrush Source="C:\Users\hp\Downloads\Tubes3_Fingerfingeran\HelloWorld\Assets\Insert.png"/>
                 </Border.Background>
                 <Image x:Name="fingerprintImage" Width="320" Height="320" Stretch="UniformToFill" HorizontalAlignment="Center"/>
             </Border>
@@ -42,10 +42,10 @@
         <StackPanel Grid.Row="1" Grid.Column="2" Margin="0,0,50,50" Background="#E0E0E0" Width="600" Height="500">
             <StackPanel x:Name="rightPanel" HorizontalAlignment="Center" x:DataType="local:ResultData">
                 <Image Width="200" Height="200" Stretch="UniformToFill" Margin="10">
-                <Image.Source>
-                    <Binding Path="ImagePath"/>
-                </Image.Source>
-            </Image>
+                    <Image.Source>
+                        <Binding Path="ImageSource"/>
+                    </Image.Source>
+                </Image>
                 <TextBlock x:Name="dynamicMessage" Text="Welcome Message" FontWeight="Bold" FontSize="16" Margin="10"/>
                 <TextBlock x:Name="matchFoundMessage" Text="MATCH: FOUND!" FontWeight="Bold" Margin="0,20,0,10" IsVisible="False"/>
                 <Grid x:Name="detailsGrid" Margin="10" IsVisible="False">
@@ -72,9 +72,6 @@
                     <TextBlock Grid.Row="1" Grid.Column="0" Text="Place/Birthdate:" VerticalAlignment="Center" Margin="5"/>
                     <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Place}" Margin="5"/>
                     
-                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Place/Birthdate:" VerticalAlignment="Center" Margin="5"/>
-                    <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Place}" Margin="5"/>
-
                     <TextBlock Grid.Row="2" Grid.Column="0" Text="Blood Type:" VerticalAlignment="Center" Margin="5"/>
                     <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding BloodType}" Margin="5"/>
 

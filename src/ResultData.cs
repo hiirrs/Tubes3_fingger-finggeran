@@ -1,3 +1,7 @@
+using Avalonia.Media.Imaging;
+using System;
+using System.IO;
+
 namespace src
 {
     public class ResultData
@@ -13,5 +17,17 @@ namespace src
         public string WorkStatus { get; set; }
         public string Nationality { get; set; }
         public string ImagePath { get; set; }
+
+        public Bitmap ImageSource
+        {
+            get
+            {
+                if (File.Exists(ImagePath))
+                {
+                    return new Bitmap(ImagePath);
+                }
+                return null;
+            }
+        }
     }
 }

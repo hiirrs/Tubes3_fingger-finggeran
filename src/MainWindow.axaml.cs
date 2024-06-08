@@ -98,7 +98,7 @@ public partial class MainWindow : Window
             MaritalStatus = "Single",
             WorkStatus = "Employed",
             Nationality = "American",
-            ImagePath = "D:/Akademik/SEMESTER 4/STIMA/TUBES/Tubes3_Fingerfingeran/dataset/1__M_Left_index_finger.BMP"
+            ImagePath = "C:/Users/hp/Downloads/Tubes3_Fingerfingeran/test/dataset/1__M_Left_index_finger.BMP"
         };
 
         var panel = this.FindControl<StackPanel>("rightPanel");

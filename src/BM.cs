@@ -1,7 +1,7 @@
 using System;
 
 
-namespace FingerprintMatchingApp{
+namespace src {
     public class BoyerMoore
     {
         private readonly int[] _badCharacterShift;

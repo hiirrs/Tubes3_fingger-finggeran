@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace FingerprintMatchingApp{
+namespace src {
     public static class AlayFixer
     {
         public static string FixAlayText(string text, List<string> correctNames)

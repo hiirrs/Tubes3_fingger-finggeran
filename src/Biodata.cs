@@ -1,12 +1,12 @@
 using System;
 
-namespace FingerprintMatchingApp{
+namespace src {
     public class Biodata
     {
         public string NIK { get; set; }
         public string Nama { get; set; }
         public string TempatLahir { get; set; }
-        public DateTime TanggalLahir { get; set; }
+        public string TanggalLahir { get; set; }
         public string JenisKelamin { get; set; }
         public string GolonganDarah { get; set; }
         public string Alamat { get; set; }

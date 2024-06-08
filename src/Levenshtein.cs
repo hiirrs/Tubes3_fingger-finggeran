@@ -1,6 +1,6 @@
 using System;
 
-namespace FingerprintMatchingApp{
+namespace src {
     public class Levenshtein {
         public static double CalculateLevenshteinBlockString(string block, string str) 
         {

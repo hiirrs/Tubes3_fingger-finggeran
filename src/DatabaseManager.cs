@@ -1,8 +1,7 @@
 using MySql.Data.MySqlClient;
 using System.Collections.Generic;
 
-namespace FingerprintMatchingApp
-{
+namespace src {
     public static class DatabaseManager
     {
         private static string connectionString = "server=localhost;user=root;password=23)#)$;database=tubes3_stima24";
@@ -27,38 +26,40 @@ namespace FingerprintMatchingApp
             return imagePaths.ToArray();
         }
 
-        public static List<Biodata> GetBiodataForName(string name)
+        public static Biodata GetBiodataForName(string name)
         {
             string query = "SELECT * FROM biodata WHERE nama = @name";
-            List<Biodata> biodataList = new List<Biodata>();
+            
+            // List<Biodata> biodataList = new List<Biodata>();
             using (var connection = new MySqlConnection(connectionString))
             {
                 connection.Open();
+                Biodata data = new Biodata();
                 var command = new MySqlCommand(query, connection);
                 command.Parameters.AddWithValue("@name", name);
                 using (var reader = command.ExecuteReader())
                 {
                     while (reader.Read())
                     {
-                        Biodata data = new Biodata
+                        
                         {
-                            NIK = reader.GetString("NIK"),
-                            Nama = reader.GetString("nama"),
-                            TempatLahir = reader.GetString("tempat_lahir"),
-                            TanggalLahir = reader.GetDateTime("tanggal_lahir"),
-                            JenisKelamin = reader.GetString("jenis_kelamin"),
-                            GolonganDarah = reader.GetString("golongan_darah"),
-                            Alamat = reader.GetString("alamat"),
-                            Agama = reader.GetString("agama"),
-                            StatusPerkawinan = reader.GetString("status_perkawinan"),
-                            Pekerjaan = reader.GetString("pekerjaan"),
-                            Kewarganegaraan = reader.GetString("kewarganegaraan")
+                            data.NIK = reader.GetString("NIK");
+                            data.Nama = reader.GetString("nama");
+                            data.TempatLahir = reader.GetString("tempat_lahir");
+                            data.TanggalLahir = reader.GetDateTime("tanggal_lahir").ToString("yyyy-MM-dd");
+                            data.JenisKelamin = reader.GetString("jenis_kelamin");
+                            data.GolonganDarah = reader.GetString("golongan_darah");
+                            data.Alamat = reader.GetString("alamat");
+                            data.Agama = reader.GetString("agama");
+                            data.StatusPerkawinan = reader.GetString("status_perkawinan");
+                            data.Pekerjaan = reader.GetString("pekerjaan");
+                            data.Kewarganegaraan = reader.GetString("kewarganegaraan");
                         };
-                        biodataList.Add(data);
+                        // biodataList.Add(data);
                     }
                 }
+                return data;
             }
-            return biodataList;
         }
 
         public static string GetNameFromImagePath(string imagePath)

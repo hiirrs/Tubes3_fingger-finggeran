@@ -4,60 +4,9 @@ using System.Text;
 using System.Collections.Generic;
 
 
-namespace FingerprintMatchingApp{
+namespace src {
     public static class ImageProcessor
     {
-        public static string ConvertImageToBinaryString(string imagePath)
-        {
-            try
-            {
-                using (Bitmap bitmap = new Bitmap(imagePath))
-                {
-                    StringBuilder binaryString = new StringBuilder();
-
-                    for (int y = 0; y < bitmap.Height; y++)
-                    {
-                        for (int x = 0; x < bitmap.Width; x++)
-                        {
-                            Color pixelColor = bitmap.GetPixel(x, y);
-                            int gray = (pixelColor.R + pixelColor.G + pixelColor.B) / 3;
-                            binaryString.Append(gray < 128 ? "0" : "1");
-                        }
-                    }
-
-                    return binaryString.ToString();
-                }
-            }
-            catch (Exception ex)
-            {
-                throw new ArgumentException($"Error processing image at path {imagePath}: {ex.Message}");
-            }
-        }
-
-        public static string ConvertBinaryToAscii(string binaryString)
-        {
-            StringBuilder asciiString = new StringBuilder();
-
-            for (int i = 0; i < binaryString.Length; i += 8)
-            {
-                if (i + 8 <= binaryString.Length)
-                {
-                    string byteString = binaryString.Substring(i, 8);
-                    int asciiValue = Convert.ToInt32(byteString, 2);
-                    asciiString.Append((char)asciiValue);
-                }
-            }
-
-            return asciiString.ToString();
-        }
-
-        public static string ExtractCentralAsciiBlock(string asciiString, int length)
-        {
-            int center = asciiString.Length / 2;
-            int start = Math.Max(0, center - length / 2);
-            return asciiString.Substring(start, Math.Min(length, asciiString.Length - start));
-        }
-
         public static List<string> ConvertImageToBinaryString2(string imagePath)
         {
             try
@@ -125,5 +74,6 @@ namespace FingerprintMatchingApp{
             int start = Math.Max(0, center - length / 2);
             return middleString.Substring(start, Math.Min(length, middleString.Length - start));
         }
+        
     }
 }

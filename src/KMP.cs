@@ -1,5 +1,5 @@
 
-namespace FingerprintMatchingApp{
+namespace src {
     public class KMP
     {
         private readonly int[] _lps;

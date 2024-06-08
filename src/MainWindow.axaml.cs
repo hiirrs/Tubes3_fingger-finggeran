@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Avalonia.Controls.ApplicationLifetimes;
+using System.Diagnostics;
 
 namespace src;
 
@@ -138,5 +139,15 @@ public partial class MainWindow : Window
     {
         Console.WriteLine("Searching...");
         // Placeholder for the actual search logic
+    }
+
+    private void PerformSearch(string imagePath)
+    {
+        var stopwatch = new Stopwatch();
+        stopwatch.Start();
+        // Integrate your fingerprint search logic here
+        // Example:
+        // var results = FingerprintMatchingApp.ProcessFingerprint(imagePath);
+        // DisplayResults(results, stopwatch.ElapsedMilliseconds);
     }
 }

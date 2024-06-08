@@ -62,3 +62,25 @@ C:\Users\hp\Downloads\Tubes3_Fingerfingeran\Algorithm\bin\Debug\net8.0\runtimes\
 C:\Users\hp\Downloads\Tubes3_Fingerfingeran\Algorithm\obj\Debug\net8.0\Algorithm.csproj.Up2Date
 C:\Users\hp\Downloads\Tubes3_Fingerfingeran\Algorithm\obj\Debug\net8.0\Algorithm.genruntimeconfig.cache
 C:\Users\hp\Downloads\Tubes3_Fingerfingeran\Algorithm\obj\Debug\net8.0\ref\Algorithm.dll
+D:\Akademik\SEMESTER 4\STIMA\TUBES\Tubes3_Fingerfingeran\Algorithm\bin\Debug\net8.0\Algorithm.exe
+D:\Akademik\SEMESTER 4\STIMA\TUBES\Tubes3_Fingerfingeran\Algorithm\bin\Debug\net8.0\Algorithm.deps.json
+D:\Akademik\SEMESTER 4\STIMA\TUBES\Tubes3_Fingerfingeran\Algorithm\bin\Debug\net8.0\Algorithm.runtimeconfig.json
+D:\Akademik\SEMESTER 4\STIMA\TUBES\Tubes3_Fingerfingeran\Algorithm\bin\Debug\net8.0\Algorithm.dll
+D:\Akademik\SEMESTER 4\STIMA\TUBES\Tubes3_Fingerfingeran\Algorithm\bin\Debug\net8.0\Algorithm.pdb
+D:\Akademik\SEMESTER 4\STIMA\TUBES\Tubes3_Fingerfingeran\Algorithm\bin\Debug\net8.0\Microsoft.Extensions.Logging.Abstractions.dll
+D:\Akademik\SEMESTER 4\STIMA\TUBES\Tubes3_Fingerfingeran\Algorithm\bin\Debug\net8.0\Microsoft.Win32.SystemEvents.dll
+D:\Akademik\SEMESTER 4\STIMA\TUBES\Tubes3_Fingerfingeran\Algorithm\bin\Debug\net8.0\MySqlConnector.dll
+D:\Akademik\SEMESTER 4\STIMA\TUBES\Tubes3_Fingerfingeran\Algorithm\bin\Debug\net8.0\System.Drawing.Common.dll
+D:\Akademik\SEMESTER 4\STIMA\TUBES\Tubes3_Fingerfingeran\Algorithm\bin\Debug\net8.0\runtimes\win\lib\net8.0\Microsoft.Win32.SystemEvents.dll
+D:\Akademik\SEMESTER 4\STIMA\TUBES\Tubes3_Fingerfingeran\Algorithm\obj\Debug\net8.0\Algorithm.csproj.AssemblyReference.cache
+D:\Akademik\SEMESTER 4\STIMA\TUBES\Tubes3_Fingerfingeran\Algorithm\obj\Debug\net8.0\Algorithm.GeneratedMSBuildEditorConfig.editorconfig
+D:\Akademik\SEMESTER 4\STIMA\TUBES\Tubes3_Fingerfingeran\Algorithm\obj\Debug\net8.0\Algorithm.AssemblyInfoInputs.cache
+D:\Akademik\SEMESTER 4\STIMA\TUBES\Tubes3_Fingerfingeran\Algorithm\obj\Debug\net8.0\Algorithm.AssemblyInfo.cs
+D:\Akademik\SEMESTER 4\STIMA\TUBES\Tubes3_Fingerfingeran\Algorithm\obj\Debug\net8.0\Algorithm.csproj.CoreCompileInputs.cache
+D:\Akademik\SEMESTER 4\STIMA\TUBES\Tubes3_Fingerfingeran\Algorithm\obj\Debug\net8.0\Algorithm.sourcelink.json
+D:\Akademik\SEMESTER 4\STIMA\TUBES\Tubes3_Fingerfingeran\Algorithm\obj\Debug\net8.0\Algorithm.csproj.Up2Date
+D:\Akademik\SEMESTER 4\STIMA\TUBES\Tubes3_Fingerfingeran\Algorithm\obj\Debug\net8.0\Algorithm.dll
+D:\Akademik\SEMESTER 4\STIMA\TUBES\Tubes3_Fingerfingeran\Algorithm\obj\Debug\net8.0\refint\Algorithm.dll
+D:\Akademik\SEMESTER 4\STIMA\TUBES\Tubes3_Fingerfingeran\Algorithm\obj\Debug\net8.0\Algorithm.pdb
+D:\Akademik\SEMESTER 4\STIMA\TUBES\Tubes3_Fingerfingeran\Algorithm\obj\Debug\net8.0\Algorithm.genruntimeconfig.cache
+D:\Akademik\SEMESTER 4\STIMA\TUBES\Tubes3_Fingerfingeran\Algorithm\obj\Debug\net8.0\ref\Algorithm.dll

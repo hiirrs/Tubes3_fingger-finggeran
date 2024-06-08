@@ -1,0 +1,102 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:src"
+        x:Class="src.MainWindow"
+        Title="Fingerprint Checker by Fingerfingeran"
+        Width="976" Height="611"
+        Background="{StaticResource WindowBackground}">
+    <Window.Resources>
+        <LinearGradientBrush x:Key="WindowBackground" StartPoint="0,0" EndPoint="0,1">
+            <GradientStop Color="#FFFFFF" Offset="0.0"/>  <!-- Light blue at the top -->
+            <GradientStop Color="#D9F4F1" Offset="1.0"/>  <!-- Dark blue at the bottom -->
+        </LinearGradientBrush>
+    </Window.Resources>
+
+    <Grid RowDefinitions="Auto,*">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>  <!-- For the left panel -->
+            <ColumnDefinition Width="5"/>   <!-- Spacer column -->
+            <ColumnDefinition Width="3*"/>    <!-- Fixed width for the right panel -->
+        </Grid.ColumnDefinitions>
+        <TextBlock Grid.ColumnSpan="3" Text="Welcome to Fingerprint Checker by Fingerfingeran" 
+                   FontWeight="Bold" FontSize="24" HorizontalAlignment="Center" Margin="30,20,30,20"/>
+        <!-- Left Panel for Image and Controls -->
+        <StackPanel Grid.Row="1" Grid.Column="0" Margin="20">
+            <Button x:Name="choosePictureButton" Content="Choose Picture" HorizontalAlignment="Center"/>
+            <Border Margin="10" Width="300" Height="300">
+                 <Border.Background>
+                    <ImageBrush Source="D:\Akademik\SEMESTER 4\STIMA\TUBESTubes3_Fingerfingeran\src\Assets\Insert.png"/>
+                </Border.Background>
+                <Image x:Name="fingerprintImage" Width="320" Height="320" Stretch="UniformToFill" HorizontalAlignment="Center"/>
+            </Border>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="20">
+                <RadioButton x:Name="kmpRadioButton" GroupName="Algorithm" Content="KMP" IsChecked="True"/>
+                <RadioButton x:Name="bmRadioButton" GroupName="Algorithm" Content="BM" Margin="10,0,0,0"/>
+            </StackPanel>
+            <Button x:Name="searchButton" Content="Search" HorizontalAlignment="Center" Margin="10"/>
+        </StackPanel>
+
+        <!-- Spacer Column -->
+        <Border Grid.Row="1" Grid.Column="1" Background="Transparent" Width="10"/>
+
+        <StackPanel Grid.Row="1" Grid.Column="2" Margin="0,0,50,50" Background="#E0E0E0" Width="600" Height="500">
+            <StackPanel x:Name="rightPanel" HorizontalAlignment="Center" x:DataType="local:ResultData">
+                <Image Width="200" Height="200" Stretch="UniformToFill" Margin="10">
+                <Image.Source>
+                    <Binding Path="ImagePath"/>
+                </Image.Source>
+            </Image>
+                <TextBlock x:Name="dynamicMessage" Text="Welcome Message" FontWeight="Bold" FontSize="16" Margin="10"/>
+                <TextBlock x:Name="matchFoundMessage" Text="MATCH: FOUND!" FontWeight="Bold" Margin="0,20,0,10" IsVisible="False"/>
+                <Grid x:Name="detailsGrid" Margin="10" IsVisible="False">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" MinWidth="100"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    
+                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Name:" VerticalAlignment="Center" Margin="5"/>
+                    <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Name}" Margin="5"/>
+
+                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Place/Birthdate:" VerticalAlignment="Center" Margin="5"/>
+                    <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Place}" Margin="5"/>
+                    
+                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Place/Birthdate:" VerticalAlignment="Center" Margin="5"/>
+                    <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Place}" Margin="5"/>
+
+                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Blood Type:" VerticalAlignment="Center" Margin="5"/>
+                    <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding BloodType}" Margin="5"/>
+
+                    <TextBlock Grid.Row="3" Grid.Column="0" Text="Gender:" VerticalAlignment="Center" Margin="5"/>
+                    <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Gender}" Margin="5"/>
+
+                    <TextBlock Grid.Row="4" Grid.Column="0" Text="Address:" VerticalAlignment="Center" Margin="5"/>
+                    <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Address}" Margin="5"/>
+
+                    <TextBlock Grid.Row="5" Grid.Column="0" Text="Religion:" VerticalAlignment="Center" Margin="5"/>
+                    <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding Religion}" Margin="5"/>
+
+                    <TextBlock Grid.Row="6" Grid.Column="0" Text="Marital Status:" VerticalAlignment="Center" Margin="5"/>
+                    <TextBox Grid.Row="6" Grid.Column="1" Text="{Binding MaritalStatus}" Margin="5"/>
+
+                    <TextBlock Grid.Row="7" Grid.Column="0" Text="Work Status:" VerticalAlignment="Center" Margin="5"/>
+                    <TextBox Grid.Row="7" Grid.Column="1" Text="{Binding WorkStatus}" Margin="5"/>
+
+                    <TextBlock Grid.Row="8" Grid.Column="0" Text="Nationality:" VerticalAlignment="Center" Margin="5"/>
+                    <TextBox Grid.Row="8" Grid.Column="1" Text="{Binding Nationality}" Margin="5"/>
+                </Grid>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Window>

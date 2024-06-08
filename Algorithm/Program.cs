@@ -200,7 +200,7 @@ namespace FingerprintMatchingApp
         }
         private static string[] GetImagePathsFromDatabase()
         {
-            string connectionString = "server=localhost;user=root;password=12345;database=tubes3_stima24";
+            string connectionString = "server=localhost;user=root;password=23)#)$;database=tubes3_stima24";
             string query = "SELECT berkas_citra FROM sidik_jari";
 
             List<string> imagePaths = new List<string>();
@@ -227,7 +227,7 @@ namespace FingerprintMatchingApp
 
         private static List<string> GetCorrectNamesFromDatabase()
         {
-            string connectionString = "server=localhost;user=root;password=12345;database=tubes3_stima24";
+            string connectionString = "server=localhost;user=root;password=23)#)$;database=tubes3_stima24";
             string query = "SELECT nama FROM sidik_jari";
 
             List<string> correctNames = new List<string>();
@@ -250,6 +250,33 @@ namespace FingerprintMatchingApp
             }
 
             return correctNames;
+        }
+
+        private static List<string> GetAlayNamesFromDatabase()
+        {
+            string connectionString = "server=localhost;user=root;password=23)#)$;database=tubes3_stima24";
+            string query = "SELECT nama FROM biodata";
+
+            List<string> AlayNames = new List<string>();
+
+            using (var connection = new MySqlConnection(connectionString))
+            {
+                connection.Open();
+
+                using (var command = new MySqlCommand(query, connection))
+                {
+                    using (var reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            string AlayName = reader.GetString("nama");
+                            AlayNames.Add(AlayName);
+                        }
+                    }
+                }
+            }
+
+            return AlayNames;
         }
     }
 }

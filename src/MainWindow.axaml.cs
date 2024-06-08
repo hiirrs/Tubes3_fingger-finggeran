@@ -88,6 +88,7 @@ public partial class MainWindow : Window
 
         var resultData = new ResultData
         {
+            NIK = "1234",
             Name = "John Doe",
             Place = "New York",
             Birthdate = "01-01-1990",
@@ -98,7 +99,7 @@ public partial class MainWindow : Window
             MaritalStatus = "Single",
             WorkStatus = "Employed",
             Nationality = "American",
-            ImagePath = "C:/Users/hp/Downloads/Tubes3_Fingerfingeran/test/dataset/1__M_Left_index_finger.BMP"
+            ImagePath = "D:/Akademik/SEMESTER 4/STIMA/TUBES/Tubes3_Fingerfingeran/test/dataset/1__M_Left_index_finger.BMP"
         };
 
         var panel = this.FindControl<StackPanel>("rightPanel");

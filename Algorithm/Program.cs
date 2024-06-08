@@ -20,6 +20,30 @@ namespace FingerprintMatchingApp
             string? algorithm = Console.ReadLine();
 
             string[] imagePathsFromDatabase = GetImagePathsFromDatabase();
+            List<string> databaseName = GetAlayNamesFromDatabase();
+            List<string> correctNames = GetCorrectNamesFromDatabase();
+
+            Dictionary<string, string> nameMap = new Dictionary<string, string>();
+
+            foreach (string nama2 in databaseName)
+            {
+                Console.WriteLine(nama2);
+                string fixedName = AlayFixer.FixAlayText(nama2, correctNames);
+                if (!nameMap.ContainsKey(nama2)) // Check if the key already exists
+                {
+                    Console.WriteLine(fixedName);
+                    nameMap.Add(nama2, fixedName);
+                }
+                else
+                {
+                    // Optionally, handle the case where the key already exists, such as updating the value or logging a message
+                    Console.WriteLine($"Skipping duplicate entry for: {nama2}");
+                }
+            }
+            Console.WriteLine($"Finish Mapping");
+
+            string name = "";
+
 
             // try
             // {
@@ -143,28 +167,42 @@ namespace FingerprintMatchingApp
                 {
                     Console.WriteLine("Match found at position: " + bestMatchPosition);
                     Console.WriteLine("Matching image path: " + bestMatchImagePath);
+                    name = GetNameFromImagePath(bestMatchImagePath);
+                    
                 }
                 else
                 {
                     Console.WriteLine("No exact match found. Best similarity match:");
                     Console.WriteLine("Image path: " + bestMatchImagePath);
                     Console.WriteLine($"Levenshtein similarity percentage: {bestLevenshteinSimilarity:F2}%");
+                    name = GetNameFromImagePath(bestMatchImagePath);
                 }
+                
             }
             catch (Exception ex)
             {
                 Console.WriteLine("An error occurred: " + ex.Message);
             }
-
-            List<string> correctNames = GetCorrectNamesFromDatabase();
-
-            Console.WriteLine("Nama Alay:");
-            string? namaAlay = Console.ReadLine();
-            if (!string.IsNullOrEmpty(namaAlay))
+            
+            string keyNameToDatabase = FindAlayName(nameMap, name);
+    
+            List<Biodata> biodata = GetBiodataForName(keyNameToDatabase);
+            Console.WriteLine($"Biodata for {keyNameToDatabase}:");
+            foreach (var data in biodata)
             {
-                Console.WriteLine($"Fixed: {AlayFixer.FixAlayText(namaAlay, correctNames)}");
+                Console.WriteLine($"{data.NIK}, {data.Nama}, {data.TempatLahir}, {data.TanggalLahir.ToString("yyyy-MM-dd")}, {data.JenisKelamin}, {data.GolonganDarah}, {data.Alamat}, {data.Agama}, {data.StatusPerkawinan}, {data.Pekerjaan}, {data.Kewarganegaraan}");
             }
         }
+
+            // List<string> correctNames = GetCorrectNamesFromDatabase();
+
+            // Console.WriteLine("Nama Alay:");
+            // string? namaAlay = Console.ReadLine();
+            // if (!string.IsNullOrEmpty(namaAlay))
+            // {
+            //     Console.WriteLine($"Fixed: {AlayFixer.FixAlayText(namaAlay, correctNames)}");
+            // }
+    
 
         public static class AlayFixer
         {
@@ -223,6 +261,88 @@ namespace FingerprintMatchingApp
             }
 
             return imagePaths.ToArray();
+        }
+
+        private static List<Biodata> GetBiodataForName(string name)
+        {
+            string connectionString = "server=localhost;user=root;password=your_password;database=your_database";
+            string query = "SELECT * FROM biodata WHERE nama = @name";
+            List<Biodata> biodataList = new List<Biodata>();
+
+            using (var connection = new MySqlConnection(connectionString))
+            {
+                connection.Open();
+                using (var command = new MySqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@name", name);
+                    using (var reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            Biodata data = new Biodata
+                            {
+                                NIK = reader.GetString("NIK"),
+                                Nama = reader.GetString("nama"),
+                                TempatLahir = reader.GetString("tempat_lahir"),
+                                TanggalLahir = reader.GetDateTime("tanggal_lahir"),
+                                JenisKelamin = reader.GetString("jenis_kelamin"),
+                                GolonganDarah = reader.GetString("golongan_darah"),
+                                Alamat = reader.GetString("alamat"),
+                                Agama = reader.GetString("agama"),
+                                StatusPerkawinan = reader.GetString("status_perkawinan"),
+                                Pekerjaan = reader.GetString("pekerjaan"),
+                                Kewarganegaraan = reader.GetString("kewarganegaraan")
+                            };
+                            biodataList.Add(data);
+                        }
+                    }
+                }
+            }
+            return biodataList;
+        }
+
+        public static string FindAlayName(Dictionary<string, string> dictionary, string alayName)
+        {
+            foreach (var pair in dictionary)
+            {
+                if (pair.Value == alayName)
+                {
+                    return pair.Key; // Return the first key that matches the target value
+                }
+            }
+            return null; // Return null if no matching value is found
+        }
+
+
+        public static string GetNameFromImagePath(string imagePath)
+        {
+            string connectionString = "server=localhost;user=root;password=your_password;database=tubes3_stima24";
+            string query = "SELECT nama FROM sidik_jari WHERE berkas_citra = @ImagePath";
+            string name = "";
+
+            using (var connection = new MySqlConnection(connectionString))
+            {
+                connection.Open();
+                using (var command = new MySqlCommand(query, connection))
+                {
+                    // Use parameterized queries to avoid SQL injection
+                    command.Parameters.AddWithValue("@ImagePath", imagePath);
+
+                    using (var reader = command.ExecuteReader())
+                    {
+                        if (reader.Read()) // Assuming imagePath uniquely identifies a record
+                        {
+                            name = reader["nama"] != DBNull.Value ? reader.GetString("nama") : "No name found";
+                        }
+                        else
+                        {
+                            name = "No record found";
+                        }
+                    }
+                }
+            }
+
+            return name;
         }
 
         private static List<string> GetCorrectNamesFromDatabase()
@@ -584,3 +704,23 @@ public static class ImageProcessor
         return middleString.Substring(start, Math.Min(length, middleString.Length - start));
     }
 }
+
+public class Biodata
+    {
+        public string NIK { get; set; }
+        public string Nama { get; set; }
+        public string TempatLahir { get; set; }
+        public DateTime TanggalLahir { get; set; }
+        public string JenisKelamin { get; set; }
+        public string GolonganDarah { get; set; }
+        public string Alamat { get; set; }
+        public string Agama { get; set; }
+        public string StatusPerkawinan { get; set; }
+        public string Pekerjaan { get; set; }
+        public string Kewarganegaraan { get; set; }
+
+    }
+
+
+
+    

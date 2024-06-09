@@ -41,3 +41,8 @@ D:\Akademik\SEMESTER 4\STIMA\TUBES\Tubes3_Fingerfingeran\DatabaseLoader\obj\Debu
 D:\Akademik\SEMESTER 4\STIMA\TUBES\Tubes3_Fingerfingeran\DatabaseLoader\obj\Debug\net8.0\DatabaseLoader.pdb
 D:\Akademik\SEMESTER 4\STIMA\TUBES\Tubes3_Fingerfingeran\DatabaseLoader\obj\Debug\net8.0\DatabaseLoader.genruntimeconfig.cache
 D:\Akademik\SEMESTER 4\STIMA\TUBES\Tubes3_Fingerfingeran\DatabaseLoader\obj\Debug\net8.0\ref\DatabaseLoader.dll
+D:\Akademik\SEMESTER 4\STIMA\TUBES\Tubes3_Fingerfingeran\DatabaseLoader\bin\Debug\net8.0\DotNetEnv.dll
+D:\Akademik\SEMESTER 4\STIMA\TUBES\Tubes3_Fingerfingeran\DatabaseLoader\bin\Debug\net8.0\Microsoft.Extensions.Configuration.dll
+D:\Akademik\SEMESTER 4\STIMA\TUBES\Tubes3_Fingerfingeran\DatabaseLoader\bin\Debug\net8.0\Microsoft.Extensions.Configuration.Abstractions.dll
+D:\Akademik\SEMESTER 4\STIMA\TUBES\Tubes3_Fingerfingeran\DatabaseLoader\bin\Debug\net8.0\Microsoft.Extensions.Primitives.dll
+D:\Akademik\SEMESTER 4\STIMA\TUBES\Tubes3_Fingerfingeran\DatabaseLoader\bin\Debug\net8.0\Sprache.dll

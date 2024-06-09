@@ -1,59 +1,7 @@
-from faker import Faker
-import random
 import os
 import mysql.connector
 from datetime import datetime
-from datetime import datetime
-
-def alay_upper_lower(text):
-    result = ''.join(random.choice([char.lower(), char.upper()]) for char in text)
-    return result
-
-def alay_numbers(text):
-    replacement = {'a': '4', 'i': '1', 'e': '3', 'o': '0', 's': '5', 'g': '6', 't': '7', 'z': '2'}
-    result = ''.join(replacement.get(char.lower(), char) for char in text)
-    return result
-
-def alay_remove_vowels(text):
-    vowels = "aeiouAEIOU"
-    result = ''.join(char for char in text if char not in vowels or random.random() > 0.5)
-    return result
-
-def alay_abbreviation(text):
-    words = text.split()
-    result = ' '.join(alay_remove_vowels(word) for word in words)
-    return result
-
-def alay_combination(text):
-    if random.random() > 0.75:
-        result = alay_upper_lower(alay_numbers(alay_abbreviation(text)))
-        return result
-    else:
-        return text
-
-def generate_bahasa_alay(text):
-    print("Kata orisinal:", text)
-    print("Kombinasi huruf besar-kecil:", alay_upper_lower(text))
-    print("Penggunaan angka:", alay_numbers(text))
-    print("Penyingkatan:", alay_abbreviation(text))
-    print("Kombinasi ketiganya:", alay_combination(text))
-
-fake = Faker()
-
-def generate_fake_data():
-    nik = fake.random_number(digits=16)
-    nama = fake.name()
-    tempat_lahir = fake.city()
-    tanggal_lahir = fake.date_of_birth()
-    jenis_kelamin = random.choice(['Laki-Laki', 'Perempuan'])
-    golongan_darah = random.choice(['A', 'B', 'AB', 'O']) + random.choice(['+', '-'])
-    alamat = fake.address()
-    agama = random.choice(['Islam', 'Kristen', 'Katolik', 'Hindu', 'Buddha', 'Konghucu'])
-    status_perkawinan = random.choice(['Belum Menikah', 'Menikah', 'Cerai'])
-    pekerjaan = fake.job()
-    kewarganegaraan = fake.country()
-
-    return [nik, nama, tempat_lahir, tanggal_lahir, jenis_kelamin, golongan_darah, alamat, agama, status_perkawinan, pekerjaan, kewarganegaraan]
+from dotenv import load_dotenv
 
 def list_files(directory):
     files = [f for f in os.listdir(directory) if os.path.isfile(os.path.join(directory, f))]
@@ -61,7 +9,7 @@ def list_files(directory):
 
 def xor_encrypt_decrypt(text, key, length):
     encrypted = ''.join(chr(ord(char) ^ key) for char in text)
-    return encrypted[:length]  # Ensure the encrypted string fits within the specified length
+    return encrypted[:length]
 
 def mod_encrypt_date(date_obj, key):
     year = (date_obj.year + key) % 9999
@@ -91,14 +39,16 @@ def mod_decrypt_date(date_obj, key):
 
     return decrypted_date
 
+load_dotenv("../.env")
+
 directory_path = r'../test/dataset'
 files = list_files(directory_path)
 
 source_conn = mysql.connector.connect(
-    host="localhost",
-    user="root",
-    password="23)#)$",
-    database="fingerprint_original"
+    host=os.getenv("DB_SERVER"),
+    user=os.getenv("DB_USER"),
+    password=os.getenv("DB_PASSWORD"),
+    database=os.getenv("DB_SOURCE")
 )
 
 source_cursor = source_conn.cursor()
@@ -109,7 +59,7 @@ source_data = source_cursor.fetchall()
 source_cursor.execute("SELECT berkas_citra, nama FROM sidik_jari")
 source_fingerprint_data = source_cursor.fetchall()
 
-encryption_key = 129 
+encryption_key = int(os.getenv("ENCRYPTION_KEY"))
 
 encrypted_data = []
 for row in source_data:
@@ -133,9 +83,9 @@ for row in source_fingerprint_data:
     encrypted_fingerprint_data.append(tuple(encrypted_row))
 
 dest_conn = mysql.connector.connect(
-    host="localhost",
-    user="root",
-    password="23)#)$",
+    host=os.getenv("DB_SERVER"),
+    user=os.getenv("DB_USER"),
+    password=os.getenv("DB_PASSWORD"),
     database="fingerprint"
 )
 

@@ -2,6 +2,7 @@ from faker import Faker
 import random
 import os
 import mysql.connector
+from dotenv import load_dotenv
 
 def alay_upper_lower(text):
     result = ''.join(random.choice([char.lower(), char.upper()]) for char in text)
@@ -57,14 +58,16 @@ def list_files(directory):
     files = [f for f in os.listdir(directory) if os.path.isfile(os.path.join(directory, f))]
     return files
 
-directory_path = r'D:\Akademik\SEMESTER 4\STIMA\TUBES\Tubes3_Fingerfingeran\test\dataset'
+load_dotenv("../.env")
+
+directory_path = r'../test/dataset'
 files = list_files(directory_path)
 
 conn = mysql.connector.connect(
-    host="localhost",
-    user="root",
-    password="23)#)$",
-    database="fingerprint_original"
+    host=os.getenv("DB_SERVER"),
+    user=os.getenv("DB_USER"),
+    password=os.getenv("DB_PASSWORD"),
+    database=os.getenv("DB_SOURCE")
 )
 
 cursor = conn.cursor()

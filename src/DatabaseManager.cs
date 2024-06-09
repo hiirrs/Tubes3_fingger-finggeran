@@ -1,10 +1,18 @@
+using System;
+using System.Drawing;
+using System.Text;
+using System.Diagnostics;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text.RegularExpressions;
+using System.Reflection.Metadata.Ecma335;
 using MySql.Data.MySqlClient;
 using System.Collections.Generic;
 
 namespace src {
     public static class DatabaseManager
     {
-        private static string connectionString = "server=localhost;user=root;password=shzyt2929;database=tes";
+        private static string connectionString = "server=localhost;user=root;password=23)#)$;database=fingerprint";
 
         public static string[] GetImagePathsFromDatabase()
         {
@@ -19,6 +27,7 @@ namespace src {
                     while (reader.Read())
                     {
                         string imagePath = reader.GetString("berkas_citra");
+                        imagePath = DecryptXOR(imagePath, 129);
                         imagePaths.Add(imagePath);
                     }
                 }
@@ -26,9 +35,9 @@ namespace src {
             return imagePaths.ToArray();
         }
 
-        public static Biodata GetBiodataForName(string name)
+        public static Biodata GetBiodataForName(string name, List<string> correctNames)
         {
-            string query = "SELECT * FROM biodata WHERE nama = @name";
+            string query = "SELECT * FROM biodata";
             
             // List<Biodata> biodataList = new List<Biodata>();
             using (var connection = new MySqlConnection(connectionString))
@@ -41,21 +50,21 @@ namespace src {
                 {
                     while (reader.Read())
                     {
-                        
-                        {
-                            data.NIK = reader.GetString("NIK");
-                            data.Nama = reader.GetString("nama");
-                            data.TempatLahir = reader.GetString("tempat_lahir");
-                            data.TanggalLahir = reader.GetDateTime("tanggal_lahir").ToString("yyyy-MM-dd");
+                        string namaHasil = DecryptXOR(reader.GetString("nama"), 129);
+                        namaHasil = AlayFixer.FixAlayText(namaHasil, correctNames);
+                        if (namaHasil == name) {
+                            data.NIK = DecryptXOR(reader.GetString("NIK"), 129);
+                            data.Nama = namaHasil;
+                            data.TempatLahir = DecryptXOR(reader.GetString("tempat_lahir"), 129);
+                            data.TanggalLahir = DecryptDate(reader.GetDateTime("tanggal_lahir"), 129);
                             data.JenisKelamin = reader.GetString("jenis_kelamin");
-                            data.GolonganDarah = reader.GetString("golongan_darah");
-                            data.Alamat = reader.GetString("alamat");
-                            data.Agama = reader.GetString("agama");
+                            data.GolonganDarah = DecryptXOR(reader.GetString("golongan_darah"), 129);
+                            data.Alamat = DecryptXOR(reader.GetString("alamat"), 129);
+                            data.Agama = DecryptXOR(reader.GetString("agama"), 129);
                             data.StatusPerkawinan = reader.GetString("status_perkawinan");
-                            data.Pekerjaan = reader.GetString("pekerjaan");
-                            data.Kewarganegaraan = reader.GetString("kewarganegaraan");
+                            data.Pekerjaan = DecryptXOR(reader.GetString("pekerjaan"), 129);
+                            data.Kewarganegaraan = DecryptXOR(reader.GetString("kewarganegaraan"), 129);
                         };
-                        // biodataList.Add(data);
                     }
                 }
                 return data;
@@ -64,22 +73,22 @@ namespace src {
 
         public static string GetNameFromImagePath(string imagePath)
         {
+            imagePath =  DecryptXOR(imagePath, 129);
             string query = "SELECT nama FROM sidik_jari WHERE berkas_citra = @ImagePath";
             string name = "";
             using (var connection = new MySqlConnection(connectionString))
             {
                 connection.Open();
-                var command = new MySqlCommand(query, connection);
-                command.Parameters.AddWithValue("@ImagePath", imagePath);
-                using (var reader = command.ExecuteReader())
+                using (var command = new MySqlCommand(query, connection))
                 {
-                    if (reader.Read())
+                    command.Parameters.AddWithValue("@imagePath", imagePath);
+
+                    using (var reader = command.ExecuteReader())
                     {
-                        name = reader["nama"] != null ? reader.GetString("nama") : "No name found";
-                    }
-                    else
-                    {
-                        name = "No record found";
+                        if (reader.Read())
+                        {
+                            return DecryptXOR(reader.GetString("nama"), 129);
+                        }
                     }
                 }
             }
@@ -100,6 +109,7 @@ namespace src {
                         while (reader.Read())
                         {
                             string correctName = reader.GetString("nama");
+                            correctName = DecryptXOR(correctName, 129);
                             correctNames.Add(correctName);
                         }
                     }
@@ -138,5 +148,21 @@ namespace src {
             }
             return null;
         }
+
+        private static string DecryptXOR(string encryptedText, byte key)
+        {
+            StringBuilder decryptedText = new StringBuilder();
+            foreach (char c in encryptedText)
+            {
+                decryptedText.Append((char)(c ^ key));
+            }
+            return decryptedText.ToString();
+        }
+
+        private static DateTime DecryptDate(DateTime encryptedDate, int key)
+        {
+            return encryptedDate.AddYears(-key);
+        }
+
     }
 }

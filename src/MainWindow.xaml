@@ -6,8 +6,8 @@
         Background="White">
     <Window.Resources>
         <LinearGradientBrush x:Key="WindowBackground" StartPoint="0,0" EndPoint="0,1">
-            <GradientStop Color="#FFFFFF" Offset="0.0"/>  <!-- Light blue at the top -->
-            <GradientStop Color="#D9F4F1" Offset="1.0"/>  <!-- Dark blue at the bottom -->
+            <GradientStop Color="#FFFFFF" Offset="0.0"/>
+            <GradientStop Color="#D9F4F1" Offset="1.0"/>
         </LinearGradientBrush>
     </Window.Resources>
 
@@ -17,20 +17,19 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="2*"/>  <!-- For the left panel -->
-            <ColumnDefinition Width="5"/>   <!-- Spacer column -->
-            <ColumnDefinition Width="3*"/>    <!-- Fixed width for the right panel -->
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="5"/>
+            <ColumnDefinition Width="3*"/>
         </Grid.ColumnDefinitions>
         <TextBlock Grid.ColumnSpan="3" Text="Welcome to Fingerprint Checker by Fingerfingeran" 
                    FontWeight="Bold" FontSize="24" HorizontalAlignment="Center" Margin="30,20,30,20"/>
-        <!-- Left Panel for Image and Controls -->
         <StackPanel Grid.Row="1" Grid.Column="0" Margin="20">
             <Button x:Name="choosePictureButton" Content="Choose Picture" HorizontalAlignment="Center"/>
             <Border Margin="10" Width="300" Height="300">
                 <Border.Background>
                     <ImageBrush ImageSource="D:\Akademik\SEMESTER 4\STIMA\TUBES\Tubes3_Fingerfingeran\src\Assets\Insert.png"/>
                 </Border.Background>
-                <Image x:Name="fingerprintImage" Width="320" Height="320" Stretch="UniformToFill" HorizontalAlignment="Center"/>
+                <Image x:Name="fingerprintImage" Width="340" Height="340" Stretch="UniformToFill" HorizontalAlignment="Center"/>
             </Border>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="20">
                 <RadioButton x:Name="kmpRadioButton" GroupName="Algorithm" Content="KMP" IsChecked="True"/>
@@ -39,23 +38,22 @@
             <Button x:Name="searchButton" Content="Search" HorizontalAlignment="Center" Margin="10"/>
         </StackPanel>
 
-        <!-- Spacer Column -->
         <Border Grid.Row="1" Grid.Column="1" Background="Transparent" Width="10"/>
 
-        <Grid Grid.Row="1" Grid.Column="2" Margin="0,0,50,50" Background="#E0E0E0" Width="600" Height="500">
+        <Grid Grid.Row="1" Grid.Column="2" Margin="0,0,50,50" Background="#E0E0E0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <StackPanel x:Name="rightPanel" Grid.Column="0" HorizontalAlignment="Center">
-                <Image Width="200" Height="200" Stretch="UniformToFill" Margin="10" Source="{Binding ImagePath}"/>
-                <TextBlock x:Name="dynamicMessage" Text="Welcome Message" FontWeight="Bold" FontSize="16" Margin="10"/>
-                <TextBlock x:Name="matchFoundMessage" Text="MATCH: FOUND!" FontWeight="Bold" Margin="0,20,0,10" Visibility="Hidden"/>
+            <StackPanel x:Name="controlPanel" Grid.Column="0" HorizontalAlignment="Center">
+                <Image x:Name="resultImage" Width="200" Height="200" Margin="0,30,30,30" Stretch="UniformToFill" HorizontalAlignment="Center"/>
+                <TextBlock x:Name="dynamicMessage" Text="Welcome to FingerFingeran!" FontWeight="Bold" FontSize="16" Margin="10"/>
+                <TextBlock x:Name="matchFoundMessage" Text="MATCH: FOUND!" FontWeight="Bold" Margin="10" Visibility="Hidden"/>
                 <TextBlock x:Name="executionTimeMessage" Text="Execution Time: " FontWeight="Bold" FontSize="14" Margin="10"/>
                 <TextBlock x:Name="similarityPercentageMessage" Text="Similarity Percentage: " FontWeight="Bold" FontSize="14" Margin="10"/>
             </StackPanel>
-            <StackPanel Grid.Column="1" HorizontalAlignment="Center">
-                <Grid x:Name="detailsGrid" Margin="10" Visibility="Hidden">
+            <StackPanel x:Name="rightPanel" Grid.Column="1" HorizontalAlignment="Center" Margin="0,0,10,0">
+                <Grid x:Name="detailsGrid" Margin="5" Visibility="Hidden">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>

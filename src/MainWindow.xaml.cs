@@ -18,7 +18,6 @@ namespace WpfApp
         private string selectedAlgorithm = "KMP";
         private string bestMatchImagePath = string.Empty;
         private Biodata data = new();
-
         public MainWindow()
         {
             InitializeComponent();
@@ -37,7 +36,7 @@ namespace WpfApp
         {
             if (sender is RadioButton radioButton)
             {
-                selectedAlgorithm = radioButton.Content.ToString(); // This assumes the Content directly contains the algorithm name ("KMP" or "BM")
+                selectedAlgorithm = radioButton.Content.ToString();
             }
         }
 
@@ -67,30 +66,17 @@ namespace WpfApp
         private async void SearchButton_Click(object sender, RoutedEventArgs e)
         {
             var fingerprintImage = FindName("fingerprintImage") as Image;
+            var ImagePath = FindName("ImagePath") as Image;
             var dynamicMessage = FindName("dynamicMessage") as TextBlock;
             if (fingerprintImage?.Source == null)
             {
-                UpdateMessage("Please select a fingerprint image first.");
+                UpdateMessage("Please upload an image.");
                 return;
             }
 
             UpdateMessage("LOADING ...");
             string[] imagePathsFromDatabase = DatabaseManager.GetImagePathsFromDatabase();
-            List<string> databaseName = DatabaseManager.GetAlayNamesFromDatabase();
             List<string> correctNames = DatabaseManager.GetCorrectNamesFromDatabase();
-
-            Dictionary<string, string> nameMap = new Dictionary<string, string>();
-
-            foreach (string nama2 in databaseName)
-            {
-                string fixedName = AlayFixer.FixAlayText(nama2, correctNames);
-                if (!nameMap.ContainsKey(nama2))
-                {
-                    nameMap.Add(nama2, fixedName);
-                }
-            }
-
-            UpdateMessage("mAP DAH KEKUMPUL");
 
             string name = "";
             long execution = 0;
@@ -99,122 +85,121 @@ namespace WpfApp
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
 
+            List<string> binaryStrings1 = ImageProcessor.ConvertImageToBinaryString2(toCompareImagePath);
+            List<string> asciiStrings1 = ImageProcessor.ConvertBinaryToAscii2(binaryStrings1);
+            string asciiBlock1 = ImageProcessor.ExtractCentralAsciiBlock2(asciiStrings1, 30);
+
+            int bestMatchPosition = -1;
+            bestLevenshteinSimilarity = 0;
+
             UpdateMessage("Mulai ...");
+
+            matchFoundMessage.Visibility = Visibility.Hidden;
+            detailsGrid.Visibility = Visibility.Hidden;
+            executionTimeMessage.Text = $"Execution Time: ";
+            similarityPercentageMessage.Text = $"Similarity: ";
+            ShowSearchResults(false, new Biodata(), null);
+
             await Task.Run(() =>
             {
-                try
+                if (!ImageProcessor.checkEmptyPattern(asciiBlock1))
                 {
-                    List<string> binaryStrings1 = ImageProcessor.ConvertImageToBinaryString2(toCompareImagePath);
-                    List<string> asciiStrings1 = ImageProcessor.ConvertBinaryToAscii2(binaryStrings1);
-                    string asciiBlock1 = ImageProcessor.ExtractCentralAsciiBlock2(asciiStrings1, 30);
-
-                    int bestMatchPosition = -1;
-                    bestLevenshteinSimilarity = 0;
-
-                    foreach (string imagePath2 in imagePathsFromDatabase)
-                    {
-                        List<string> binaryStrings2 = ImageProcessor.ConvertImageToBinaryString2(imagePath2);
-                        List<string> asciiStrings2 = ImageProcessor.ConvertBinaryToAscii2(binaryStrings2);
-
-                        int matchPosition = -1;
-                        if (selectedAlgorithm == "BM")
+                    try
+                    { 
+                        Parallel.ForEach(imagePathsFromDatabase, (imagePath2, state) => 
                         {
-                            Dispatcher.Invoke(() => UpdateMessage("dengan bm ..."));
-                            BoyerMoore bm = new BoyerMoore(asciiBlock1);
-                            foreach (string asciiString2 in asciiStrings2)
+                            List<string> binaryStrings2 = ImageProcessor.ConvertImageToBinaryString2(imagePath2);
+                            List<string> asciiStrings2 = ImageProcessor.ConvertBinaryToAscii2(binaryStrings2);
+
+                            int matchPosition = -1;
+                            if (selectedAlgorithm == "BM")
                             {
-                                matchPosition = bm.Search(asciiString2);
-                                if (matchPosition != -1)
+                                Dispatcher.Invoke(() => UpdateMessage("Pencarian dengan BM..."));
+                                BoyerMoore bm = new BoyerMoore(asciiBlock1);
+                                foreach (string asciiString2 in asciiStrings2)
                                 {
-                                    break;
+                                    matchPosition = bm.Search(asciiString2);
+                                    if (matchPosition != -1)
+                                    {
+                                        break;
+                                    }
                                 }
                             }
-                        }
-                        else if (selectedAlgorithm == "KMP")
-                        {
-                            Dispatcher.Invoke(() => UpdateMessage("dengan kmp ..."));
-                            KMP kmp = new KMP(asciiBlock1);
-                            foreach (string asciiString2 in asciiStrings2)
+                            else if (selectedAlgorithm == "KMP")
                             {
-                                matchPosition = kmp.Search(asciiString2);
-                                if (matchPosition != -1)
+                                Dispatcher.Invoke(() => UpdateMessage("Pencarian dengan KMP..."));
+                                KMP kmp = new KMP(asciiBlock1);
+                                foreach (string asciiString2 in asciiStrings2)
                                 {
-                                    break;
+                                    matchPosition = kmp.Search(asciiString2);
+                                    if (matchPosition != -1)
+                                    {
+                                        break;
+                                    }
                                 }
                             }
-                        }
 
-                        if (matchPosition != -1)
+                            if (matchPosition != -1)
+                            {
+                                bestMatchPosition = matchPosition;
+                                bestMatchImagePath = imagePath2;
+                                state.Stop();
+                            }
+                            else
+                            {
+                                double levenshteinSimilarity = 0;
+                                foreach (string asciiString2 in asciiStrings2)
+                                {
+                                    levenshteinSimilarity = Levenshtein.CalculateLevenshteinBlockString(asciiBlock1, asciiString2);
+                                    if (levenshteinSimilarity > bestLevenshteinSimilarity &!state.IsStopped)
+                                    {
+                                        bestLevenshteinSimilarity = levenshteinSimilarity;
+                                        bestMatchImagePath = imagePath2;
+                                    }
+                                }
+                            }
+                        });
+
+                        if (bestMatchPosition != -1)
                         {
-                            bestMatchPosition = matchPosition;
-                            bestMatchImagePath = imagePath2;
-                            break;
+                            name = DatabaseManager.GetNameFromImagePath(bestMatchImagePath);
+                            bestLevenshteinSimilarity = 100;
                         }
                         else
                         {
-                            double levenshteinSimilarity = 0;
-                            foreach (string asciiString2 in asciiStrings2)
-                            {
-                                levenshteinSimilarity = Levenshtein.CalculateLevenshteinBlockString(asciiBlock1, asciiString2);
-                            }
-                            if (levenshteinSimilarity > bestLevenshteinSimilarity)
-                            {
-                                bestLevenshteinSimilarity = levenshteinSimilarity;
-                                bestMatchImagePath = imagePath2;
-                            }
+                            name = DatabaseManager.GetNameFromImagePath(bestMatchImagePath);
                         }
                     }
-
-                    if (bestMatchPosition != -1)
-                    {
-                        Console.WriteLine("Match found at position: " + bestMatchPosition);
-                        Console.WriteLine("Matching image path: " + bestMatchImagePath);
-                        name = DatabaseManager.GetNameFromImagePath(bestMatchImagePath);
-                        bestLevenshteinSimilarity = 100;
-                    }
-                    else
-                    {
-                        Console.WriteLine("No exact match found. Best similarity match:");
-                        Console.WriteLine("Image path: " + bestMatchImagePath);
-                        Console.WriteLine($"Levenshtein similarity percentage: {bestLevenshteinSimilarity:F2}%");
-                        name = DatabaseManager.GetNameFromImagePath(bestMatchImagePath);
-                    }
-
-                }
                 catch (Exception ex)
                 {
-                    Console.WriteLine("An error occurred: " + ex.Message);
                     Dispatcher.Invoke(() => {
                         UpdateMessage("An error occurred during the search process.");
-                        MessageBox.Show($"Error: {ex.Message}\n{ex.StackTrace}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     });
                 }
 
-                try
-                {
-                    string keyNameToDatabase = DatabaseManager.FindAlayName(nameMap, name);
-                    data = DatabaseManager.GetBiodataForName(keyNameToDatabase);
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine("An error occurred while fetching biodata: " + ex.Message);
-                    Dispatcher.Invoke(() => {
-                        UpdateMessage("An error occurred while fetching biodata.");
-                        MessageBox.Show($"Error: {ex.Message}\n{ex.StackTrace}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                    });
-                }
+                data = DatabaseManager.GetBiodataForName(name, correctNames);
+            }
 
                 stopwatch.Stop();
                 execution = stopwatch.ElapsedMilliseconds;
                 Console.WriteLine($"Time taken: {stopwatch.ElapsedMilliseconds} ms");
             });
 
-            UpdateMessage("Search Complete!");
-            dynamicMessage.Text = "Search Complete!";
-            matchFoundMessage.Visibility = Visibility.Visible;
-            executionTimeMessage.Text = $"{execution} ms";
-            similarityPercentageMessage.Text = $"{bestLevenshteinSimilarity:F2}%";
-            ShowSearchResults(true, data, bestMatchImagePath);
+            if (ImageProcessor.checkEmptyPattern(asciiBlock1) || bestLevenshteinSimilarity < 75)
+            {
+                UpdateMessage("No match found.");
+                dynamicMessage.Text = "No match found.";
+                executionTimeMessage.Text = $"Execution Time: {execution} ms";
+            }
+            else
+            {
+                UpdateMessage("Search Complete!");
+                dynamicMessage.Text = "Search Complete!";
+                matchFoundMessage.Visibility = Visibility.Visible;
+                executionTimeMessage.Text = $"Execution Time: {execution} ms";
+                similarityPercentageMessage.Text = $"Similarity: {bestLevenshteinSimilarity:F2}%";
+                ShowSearchResults(true, data, Path.GetFullPath(bestMatchImagePath));
+            }
         }
 
         private void UpdateMessage(string message)
@@ -249,10 +234,25 @@ namespace WpfApp
                     MaritalStatus = biodata.StatusPerkawinan,
                     WorkStatus = biodata.Pekerjaan,
                     Nationality = biodata.Kewarganegaraan,
-                    ImagePath = Path.GetFullPath(ImagePathResult)
-                //     ExecutionTime = $"{elapsedMilliseconds} ms",
-                // SimilarityPercentage = bestLevenshteinSimilarity == 1.0 ? "100%" : $"{bestLevenshteinSimilarity:F2}%"x`x`
                 };
+
+                var resultImage = FindName("resultImage") as Image;
+                if (resultImage != null)
+                {
+                    if (ImagePathResult != null)
+                    {
+                        BitmapImage bitmap = new BitmapImage(new Uri(ImagePathResult));
+                        resultImage.Source = bitmap;
+                        resultImage.Width = 200;
+                        resultImage.Height = 200;
+                        resultImage.Stretch = Stretch.Uniform;
+                        resultImage.Visibility = Visibility.Visible;
+                    }
+                    else
+                    {
+                        resultImage.Visibility = Visibility.Hidden;
+                    }
+                }
 
                 var panel = FindName("rightPanel") as StackPanel;
                 if (panel != null)

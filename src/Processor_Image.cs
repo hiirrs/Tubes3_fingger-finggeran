@@ -74,6 +74,17 @@ namespace src {
             int start = Math.Max(0, center - length / 2);
             return middleString.Substring(start, Math.Min(length, middleString.Length - start));
         }
-        
+
+        public static bool checkEmptyPattern(string pattern)
+        {
+            foreach (char c in pattern)
+            {
+                if ((int) c != 255)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
     }
 }

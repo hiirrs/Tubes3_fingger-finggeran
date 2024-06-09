@@ -5,25 +5,30 @@ import mysql.connector
 from datetime import datetime
 from dotenv import load_dotenv
 
+# Alay by uppercase lowercase
 def alay_upper_lower(text):
     result = ''.join(random.choice([char.lower(), char.upper()]) for char in text)
     return result
 
+# Alay by replacing letters with numbers
 def alay_numbers(text):
     replacement = {'a': '4', 'i': '1', 'e': '3', 'o': '0', 's': '5', 'g': '6', 't': '7'}
     result = ''.join(replacement.get(char.lower(), char) for char in text)
     return result
 
+# Alay by removing vowels
 def alay_remove_vowels(text):
     vowels = "aeiouAEIOU"
     result = ''.join(char for char in text if char not in vowels or random.random() > 0.5)
     return result
 
+# Alay by abbreviation (removing vowels)
 def alay_abbreviation(text):
     words = text.split()
     result = ' '.join(alay_remove_vowels(word) for word in words)
     return result
 
+# Combining alay strategies
 def alay_combination(text):
     if random.random() > 0.75:
         result = alay_upper_lower(alay_numbers(alay_abbreviation(text)))
@@ -31,6 +36,7 @@ def alay_combination(text):
     else:
         return text
 
+# Generating alay text
 def generate_bahasa_alay(text):
     print("Kata orisinal:", text)
     print("Kombinasi huruf besar-kecil:", alay_upper_lower(text))
@@ -38,8 +44,10 @@ def generate_bahasa_alay(text):
     print("Penyingkatan:", alay_abbreviation(text))
     print("Kombinasi ketiganya:", alay_combination(text))
 
+# Faker instance
 fake = Faker()
 
+# Generating fake data
 def generate_fake_data():
     nik = fake.random_number(digits=16)
     nama = fake.name()
@@ -55,14 +63,17 @@ def generate_fake_data():
 
     return [nik, nama, tempat_lahir, tanggal_lahir, jenis_kelamin, golongan_darah, alamat, agama, status_perkawinan, pekerjaan, kewarganegaraan]
 
+# Lists files in a directory
 def list_files(directory):
     files = [f for f in os.listdir(directory) if os.path.isfile(os.path.join(directory, f))]
     return files
 
+# Encryption/decryption by xor
 def xor_encrypt_decrypt(text, key, length):
     encrypted = ''.join(chr(ord(char) ^ key) for char in text)
     return encrypted[:length]
 
+# Encryption by mod
 def mod_encrypt_date(date_obj, key):
     year = (date_obj.year + key) % 9999
     month = (date_obj.month + key - 1) % 12 + 1
@@ -77,6 +88,7 @@ def mod_encrypt_date(date_obj, key):
 
     return encrypted_date
 
+# Decryption by mod
 def mod_decrypt_date(date_obj, key):
     year = (date_obj.year - key) % 9999
     month = (date_obj.month - key - 1) % 12 + 1
@@ -91,6 +103,7 @@ def mod_decrypt_date(date_obj, key):
 
     return decrypted_date
 
+# Loading env variables
 load_dotenv("../.env")
 
 directory_path = r'../test/dataset'
@@ -110,6 +123,7 @@ encryption_key = int(os.getenv("ENCRYPTION_KEY"))
 k = 0
 num_biodata = 600
 
+# Generate fake data
 for i in range(num_biodata):
     sql_biodata = "INSERT INTO biodata (NIK, nama, tempat_lahir, tanggal_lahir, jenis_kelamin, golongan_darah, alamat, agama, status_perkawinan, pekerjaan, kewarganegaraan) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
     fake_biodata = generate_fake_data()

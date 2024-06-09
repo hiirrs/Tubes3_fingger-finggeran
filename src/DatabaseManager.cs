@@ -24,6 +24,8 @@ namespace src {
                                $"password={Environment.GetEnvironmentVariable("DB_PASSWORD")};" +
                                $"database=fingerprint";
         }
+        
+        // get images from database
         public static string[] GetImagePathsFromDatabase()
         {
             string query = "SELECT berkas_citra FROM sidik_jari";
@@ -105,6 +107,7 @@ namespace src {
             return name;
         }
 
+        // getting names from database
         public static List<string> GetCorrectNamesFromDatabase()
         {
             string query = "SELECT nama FROM sidik_jari";
@@ -159,6 +162,7 @@ namespace src {
             return null;
         }
 
+        // decryption algorithms
         private static string DecryptXOR(string encryptedText, byte key)
         {
             StringBuilder decryptedText = new StringBuilder();

@@ -7,6 +7,7 @@ using System.Collections.Generic;
 namespace src {
     public static class ImageProcessor
     {
+        // converts image to binary
         public static List<string> ConvertImageToBinaryString2(string imagePath)
         {
             try
@@ -38,12 +39,14 @@ namespace src {
             }
         }
         
+        // converts binary to ascii
         public static List<string> ConvertBinaryToAscii2(List<string> binaryStrings)
         {
             int rows = binaryStrings.Count;
             int cols = binaryStrings[0].Length;
             List<string> asciiStrings = new List<string>();
 
+            // uses the current character and 7 characters below to form an ascii character
             for (int y = 0; y < rows - 7; y++)
             {
                 StringBuilder rowString = new StringBuilder();
@@ -66,6 +69,7 @@ namespace src {
             return asciiStrings;
         }
 
+        // extracts center ascii block
         public static string ExtractCentralAsciiBlock2(List<string> asciiStrings, int length)
         {
             int middleIndex = asciiStrings.Count / 2;
@@ -75,6 +79,7 @@ namespace src {
             return middleString.Substring(start, Math.Min(length, middleString.Length - start));
         }
 
+        // checks for empty pattern
         public static bool checkEmptyPattern(string pattern)
         {
             foreach (char c in pattern)

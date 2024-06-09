@@ -26,6 +26,7 @@ namespace WpfApp
             LoadBackgroundImage();
         }
 
+        // load background image dynamically
         private void LoadBackgroundImage()
         {
             try
@@ -88,6 +89,8 @@ namespace WpfApp
             }
         }
 
+
+        // handle when the search button is clicked
         private async void SearchButton_Click(object sender, RoutedEventArgs e)
         {
             var fingerprintImage = FindName("fingerprintImage") as Image;
@@ -239,6 +242,7 @@ namespace WpfApp
             });
         }
 
+        // show search results
         private void ShowSearchResults(bool show, Biodata biodata, string ImagePathResult)
         {
             Dispatcher.Invoke(() =>

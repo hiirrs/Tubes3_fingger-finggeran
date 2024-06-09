@@ -1,5 +1,6 @@
 using System;
 
+// Non-exact match percentage is calculated using Levenshtein distance
 namespace src {
     public class Levenshtein {
         public static double CalculateLevenshteinBlockString(string block, string str) 

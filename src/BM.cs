@@ -13,6 +13,7 @@ namespace src {
             _badCharacterShift = BuildBadCharacterShift(pattern);
         }
 
+        // initialize by building bad character shift (last occurrence)
         private int[] BuildBadCharacterShift(string pattern)
         {
             const int alphabetSize = 256;
@@ -28,6 +29,7 @@ namespace src {
             return badCharShift;
         }
 
+        // search by BM
         public int Search(string text)
         {
             int m = _pattern.Length;

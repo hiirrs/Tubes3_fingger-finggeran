@@ -61,6 +61,7 @@ source_fingerprint_data = source_cursor.fetchall()
 
 encryption_key = int(os.getenv("ENCRYPTION_KEY"))
 
+# Converting to encrypted data
 encrypted_data = []
 for row in source_data:
     encrypted_row = list(row)

@@ -11,6 +11,7 @@ namespace src {
             _lps = BuildLPSArray(pattern);
         }
 
+        // size of largest prefix that is also suffix
         private int[] BuildLPSArray(string pattern)
         {
             int[] lps = new int[pattern.Length];

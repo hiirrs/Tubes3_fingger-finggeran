@@ -5,6 +5,7 @@ using System.Text.RegularExpressions;
 namespace src {
     public static class AlayFixer
     {
+        // Fix alay using regex
         public static string FixAlayText(string text, List<string> correctNames)
         {
             Dictionary<char, char> numberSubs = new Dictionary<char, char>

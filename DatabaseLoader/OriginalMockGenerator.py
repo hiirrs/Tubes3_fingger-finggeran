@@ -72,6 +72,7 @@ conn = mysql.connector.connect(
 
 cursor = conn.cursor()
 
+# Generating fake data
 k = 0
 for i in range(1000):
     sql = "INSERT INTO biodata (NIK, nama, tempat_lahir, tanggal_lahir, jenis_kelamin, golongan_darah, alamat, agama, status_perkawinan, pekerjaan, kewarganegaraan) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"

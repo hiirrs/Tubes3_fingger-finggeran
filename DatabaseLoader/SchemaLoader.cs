@@ -2,6 +2,7 @@
 using MySqlConnector;
 using DotNetEnv;
 
+// Load the schema
 class SchemaLoader
 {
     static void Main()

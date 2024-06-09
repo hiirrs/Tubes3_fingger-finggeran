@@ -10,7 +10,7 @@ def alay_upper_lower(text):
     return result
 
 def alay_numbers(text):
-    replacement = {'a': '4', 'i': '1', 'e': '3', 'o': '0', 's': '5', 'g': '6', 't': '7'}
+    replacement = {'a': '4', 'i': '1', 'e': '3', 'o': '0', 's': '5', 'g': '6', 't': '7', 'z': '2'}
     result = ''.join(replacement.get(char.lower(), char) for char in text)
     return result
 

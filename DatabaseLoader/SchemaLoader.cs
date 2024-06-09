@@ -7,8 +7,8 @@ class SchemaLoader
     {
         string server = "localhost";
         string user = "root";
-        string password = "23)#)$";
-        string database = "fingerprint";
+        string password = "shzyt2929";
+        string database = "tes";
 
         string connectionString = $"Server={server};User ID={user};Password={password};";
 

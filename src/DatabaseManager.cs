@@ -12,7 +12,7 @@ using System.Collections.Generic;
 namespace src {
     public static class DatabaseManager
     {
-        private static string connectionString = "server=localhost;user=root;password=23)#)$;database=fingerprint";
+        private static string connectionString = "server=localhost;user=root;password=shzyt2929;database=tes";
 
         public static string[] GetImagePathsFromDatabase()
         {

@@ -27,7 +27,7 @@
             <Button x:Name="choosePictureButton" FontFamily="Segoe UI" Content="Choose Picture" HorizontalAlignment="Center"/>
             <Border Margin="10" Width="300" Height="300">
                 <Border.Background>
-                    <ImageBrush ImageSource="C:\Users\hp\Documents\ITB\sem 4\STIMA\TUBES3FINAL\Tubes3_Fingerfingeran\src\Assets\Insert.png"/>
+                    <ImageBrush x:Name="insertBackground" Stretch="UniformToFill"/>
                 </Border.Background>
                 <Image x:Name="fingerprintImage" Width="340" Height="340" Stretch="UniformToFill" HorizontalAlignment="Center"/>
             </Border>

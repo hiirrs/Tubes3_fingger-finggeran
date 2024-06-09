@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -17,11 +17,36 @@ namespace WpfApp
         private string toCompareImagePath = string.Empty;
         private string selectedAlgorithm = "KMP";
         private string bestMatchImagePath = string.Empty;
+        private string insertImage = "../src/Assets/Insert.png";
         private Biodata data = new();
         public MainWindow()
         {
             InitializeComponent();
             SetupEventHandlers();
+            LoadBackgroundImage();
+        }
+
+        private void LoadBackgroundImage()
+        {
+            try
+            {
+                string bgPath = Path.GetFullPath(insertImage);
+
+                if (File.Exists(bgPath))
+                {
+                    var bitmap = new BitmapImage(new Uri(bgPath));
+                    var insertBackground = FindName("insertBackground") as ImageBrush;
+                    insertBackground.ImageSource = bitmap;
+                }
+                else
+                {
+                    Debug.WriteLine("Image file not found: " + bgPath);
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Failed to load the image: " + ex.Message);
+            }
         }
 
         private void SetupEventHandlers()

@@ -2,7 +2,11 @@ from faker import Faker
 import random
 import os
 import mysql.connector
+from datetime import datetime
+from datetime import datetime
 
+# Alay text transformation functions
+# Alay text transformation functions
 def alay_upper_lower(text):
     result = ''.join(random.choice([char.lower(), char.upper()]) for char in text)
     return result
@@ -36,6 +40,7 @@ def generate_bahasa_alay(text):
     print("Penyingkatan:", alay_abbreviation(text))
     print("Kombinasi ketiganya:", alay_combination(text))
 
+# Fake data generation functions
 fake = Faker()
 
 def generate_fake_data():
@@ -49,7 +54,7 @@ def generate_fake_data():
     agama = random.choice(['Islam', 'Kristen', 'Katolik', 'Hindu', 'Buddha', 'Konghucu'])
     status_perkawinan = random.choice(['Belum Menikah', 'Menikah', 'Cerai'])
     pekerjaan = fake.job()
-    kewarganegaraan = 'WNI'  # Assuming Indonesian nationality for simplicity
+    kewarganegaraan = fake.country()
 
     return [nik, nama, tempat_lahir, tanggal_lahir, jenis_kelamin, golongan_darah, alamat, agama, status_perkawinan, pekerjaan, kewarganegaraan]
 
@@ -57,40 +62,92 @@ def list_files(directory):
     files = [f for f in os.listdir(directory) if os.path.isfile(os.path.join(directory, f))]
     return files
 
-directory_path = r'C:/Users/LENOVO/Koding/Semester 4/Strategi Algoritma/Tubes 3/Tubes3_Fingerfingeran/test/dataset/'
+# Simple XOR encryption function with fixed-length encoding
+def xor_encrypt_decrypt(text, key, length):
+    encrypted = ''.join(chr(ord(char) ^ key) for char in text)
+    return encrypted[:length]  # Ensure the encrypted string fits within the specified length
+
+# Encrypt date using modular arithmetic
+def mod_encrypt_date(date_obj, key):
+    year = (date_obj.year + key) % 9999
+    month = (date_obj.month + key - 1) % 12 + 1  # Ensure month is between 1 and 12
+    day = (date_obj.day + key - 1) % 31 + 1  # Ensure day is between 1 and 31
+
+    # Adjust the day to be valid for the given month and year
+    while True:
+        try:
+            encrypted_date = datetime(year, month, day).date()
+            break
+        except ValueError:
+            day -= 1
+
+    return encrypted_date
+
+def mod_decrypt_date(date_obj, key):
+    year = (date_obj.year - key) % 9999
+    month = (date_obj.month - key - 1) % 12 + 1  # Ensure month is between 1 and 12
+    day = (date_obj.day - key - 1) % 31 + 1  # Ensure day is between 1 and 31
+
+    # Adjust the day to be valid for the given month and year
+    while True:
+        try:
+            decrypted_date = datetime(year, month, day).date()
+            break
+        except ValueError:
+            day -= 1
+
+    return decrypted_date
+
+# Directory containing image files
+directory_path = r'../test/dataset'
 files = list_files(directory_path)
 
+# Database connection
 conn = mysql.connector.connect(
     host="localhost",
     user="root",
-    password="12345",
+    password="shzyt2929",
     database="tes"
 )
 
-# Create cursor
 cursor = conn.cursor()
 
-# Insert fake data into MySQL table
+# Encryption key
+encryption_key = 129  # Simple numeric key for XOR encryption
+
+# Insert fake data into MySQL tables
 k = 0
-for i in range(1000):
-    sql = "INSERT INTO biodata (NIK, nama, tempat_lahir, tanggal_lahir, jenis_kelamin, golongan_darah, alamat, agama, status_perkawinan, pekerjaan, kewarganegaraan) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+num_biodata = 600
+
+for i in range(num_biodata):
+    sql_biodata = "INSERT INTO biodata (NIK, nama, tempat_lahir, tanggal_lahir, jenis_kelamin, golongan_darah, alamat, agama, status_perkawinan, pekerjaan, kewarganegaraan) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
     fake_biodata = generate_fake_data()
     original_name = fake_biodata[1]
-    fake_biodata[1] = alay_combination(original_name)
-    cursor.execute(sql, fake_biodata)
-    if i < 600:
-        for j in range(10):
-            sql = "INSERT INTO sidik_jari (berkas_citra, nama) VALUES (%s, %s)"
-            fake_sidik = ("../test/dataset/" + files[k], original_name)
-            cursor.execute(sql, fake_sidik)
-            k += 1
 
-# Commit changes and close connection
+    # Encrypt all VARCHAR fields with fixed-length encoding
+    fake_biodata[0] = xor_encrypt_decrypt(str(fake_biodata[0]), encryption_key, 16)  # Encrypt NIK
+    fake_biodata[1] = xor_encrypt_decrypt(alay_combination(original_name), encryption_key, 100)  # Encrypt name
+    fake_biodata[2] = xor_encrypt_decrypt(fake_biodata[2], encryption_key, 100)  # Encrypt place of birth
+    fake_biodata[5] = xor_encrypt_decrypt(fake_biodata[5], encryption_key, 200)
+    fake_biodata[6] = xor_encrypt_decrypt(fake_biodata[6], encryption_key, 200)  # Encrypt address
+    fake_biodata[7] = xor_encrypt_decrypt(fake_biodata[7], encryption_key, 50)  # Encrypt religion
+    fake_biodata[9] = xor_encrypt_decrypt(fake_biodata[9], encryption_key, 100)  # Encrypt occupation
+    fake_biodata[10] = xor_encrypt_decrypt(fake_biodata[10], encryption_key, 50)  # Encrypt nationality
+
+    # Encrypt the date using modular arithmetic
+    encrypted_date = mod_encrypt_date(fake_biodata[3], encryption_key)
+    fake_biodata[3] = encrypted_date  # Store encrypted date in the original date field
+
+    cursor.execute(sql_biodata, fake_biodata)
+    
+    for j in range(10):
+        if k >= len(files):
+            k = 0  # Reset the file index if it exceeds the number of files available
+        sql_sidik_jari = "INSERT INTO sidik_jari (berkas_citra, nama) VALUES (%s, %s)"
+        fake_sidik = (xor_encrypt_decrypt("../test/dataset/" + files[k], encryption_key, 200), xor_encrypt_decrypt(original_name, encryption_key, 100))  # Encrypt name
+        cursor.execute(sql_sidik_jari, fake_sidik)
+        k += 1
+
 conn.commit()
-
-
-# kan di sidik jari itu one to many, ada 600 x 10 data
-# misal kita ada 1000 data orang di biodata
-# berarti ada yang:
-# 1. namanya gak ada di sidik jari
-# 2. namanya ada lebih dari satu di sidik jari
+cursor.close()
+conn.close()

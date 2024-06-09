@@ -8,12 +8,22 @@ using System.Text.RegularExpressions;
 using System.Reflection.Metadata.Ecma335;
 using MySql.Data.MySqlClient;
 using System.Collections.Generic;
+using DotNetEnv;
 
 namespace src {
     public static class DatabaseManager
     {
-        private static string connectionString = "server=localhost;user=root;password=23)#)$;database=fingerprint";
+        private static string connectionString;
 
+        static DatabaseManager()
+        {
+            Env.Load("../.env");
+
+            connectionString = $"server={Environment.GetEnvironmentVariable("DB_SERVER")};" +
+                               $"user={Environment.GetEnvironmentVariable("DB_USER")};" +
+                               $"password={Environment.GetEnvironmentVariable("DB_PASSWORD")};" +
+                               $"database=fingerprint";
+        }
         public static string[] GetImagePathsFromDatabase()
         {
             string query = "SELECT berkas_citra FROM sidik_jari";

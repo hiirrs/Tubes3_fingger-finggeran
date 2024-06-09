@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("DatabaseLoader")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4e27ea164ab5b1bc4e86a6018e6b9b4e7841cd53")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7f9483cfe20621a7b7054ae7bee37a038bc94c6f")]
 [assembly: System.Reflection.AssemblyProductAttribute("DatabaseLoader")]
 [assembly: System.Reflection.AssemblyTitleAttribute("DatabaseLoader")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -170,7 +170,7 @@ namespace WpfApp
                             name = DatabaseManager.GetNameFromImagePath(bestMatchImagePath);
                         }
                     }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     Dispatcher.Invoke(() => {
                         UpdateMessage("An error occurred during the search process.");

@@ -3,6 +3,7 @@ import random
 import os
 import mysql.connector
 from datetime import datetime
+from dotenv import load_dotenv
 
 def alay_upper_lower(text):
     result = ''.join(random.choice([char.lower(), char.upper()]) for char in text)
@@ -90,19 +91,21 @@ def mod_decrypt_date(date_obj, key):
 
     return decrypted_date
 
+load_dotenv("../.env")
+
 directory_path = r'../test/dataset'
 files = list_files(directory_path)
 
 conn = mysql.connector.connect(
-    host="localhost",
-    user="root",
-    password="23)#)$",
-    database="tes"
+    host=os.getenv("DB_SERVER"),
+    user=os.getenv("DB_USER"),
+    password=os.getenv("DB_PASSWORD"),
+    database="fingerprint"
 )
 
 cursor = conn.cursor()
 
-encryption_key = 129
+encryption_key = int(os.getenv("ENCRYPTION_KEY"))
 
 k = 0
 num_biodata = 600

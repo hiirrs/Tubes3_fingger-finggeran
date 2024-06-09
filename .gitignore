@@ -2,3 +2,4 @@ src/bin/
 src/obj/
 Aglorithm/bin/
 Algorithmn/obj/
+.env

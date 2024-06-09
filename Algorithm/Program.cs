@@ -255,6 +255,7 @@ namespace FingerprintMatchingApp
         public static string GetNameFromImagePath(string imagePath)
         {
             string connectionString = "server=localhost;user=root;password=shzyt2929;database=tes";
+            imagePath =  DecryptXOR(imagePath, 129);
             string query = "SELECT nama FROM sidik_jari WHERE berkas_citra = @imagePath";
 
             using (var connection = new MySqlConnection(connectionString))
@@ -324,7 +325,7 @@ namespace FingerprintMatchingApp
                 {
                     throw new ArgumentException($"Error processing image at path {imagePath}: {ex.Message}");
                 }
-            }
+            } 
 
             public static List<string> ConvertBinaryToAscii2(List<string> binaryStrings)
             {

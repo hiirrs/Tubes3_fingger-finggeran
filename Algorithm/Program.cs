@@ -172,6 +172,7 @@ namespace FingerprintMatchingApp
                         while (reader.Read())
                         {
                             string imagePath = reader.GetString("berkas_citra");
+                            imagePath = DecryptXOR(imagePath, 129);
                             imagePaths.Add(imagePath);
                         }
                     }
@@ -241,6 +242,7 @@ namespace FingerprintMatchingApp
                         while (reader.Read())
                         {
                             string correctName = reader.GetString("nama");
+                            correctName = DecryptXOR(correctName, 129);
                             correctNames.Add(correctName);
                         }
                     }
@@ -267,7 +269,7 @@ namespace FingerprintMatchingApp
                     {
                         if (reader.Read())
                         {
-                            return reader.GetString("nama");
+                            return DecryptXOR(reader.GetString("nama"), 129);
                         }
                     }
                 }

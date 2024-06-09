@@ -66,7 +66,7 @@ cd ../src
 dotnet run
 ```
 
-9. Tampilan utama program akan muncul. Masukkan sidik jari yang ingin dicocokka dan algoritma yang ingin digunakan. Setelah itu, tekan tombol Search untuk mendapatkan hasil pencocokan.
+9. Tampilan utama program akan muncul. Masukkan sidik jari yang ingin dicocokkan dan algoritma yang ingin digunakan. Setelah itu, tekan tombol Search untuk mendapatkan hasil pencocokan.
 
 
 ## Identitas Pembuat

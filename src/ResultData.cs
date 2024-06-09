@@ -5,7 +5,7 @@ using System.Windows.Media.Imaging;
 
 public class ResultData : INotifyPropertyChanged
 {
-    private string nik = string.Empty;
+    private string nik;
     public string NIK
     {
         get => nik;
@@ -16,7 +16,7 @@ public class ResultData : INotifyPropertyChanged
         }
     }
 
-    private string name = string.Empty;
+    private string name;
     public string Name
     {
         get => name;
@@ -27,7 +27,7 @@ public class ResultData : INotifyPropertyChanged
         }
     }
 
-    private string place = string.Empty;
+    private string place;
     public string Place
     {
         get => place;
@@ -38,7 +38,7 @@ public class ResultData : INotifyPropertyChanged
         }
     }
 
-    private string birthdate = string.Empty;
+    private string birthdate;
     public string Birthdate
     {
         get => birthdate;
@@ -49,7 +49,7 @@ public class ResultData : INotifyPropertyChanged
         }
     }
 
-    private string bloodType = string.Empty;
+    private string bloodType;
     public string BloodType
     {
         get => bloodType;
@@ -60,7 +60,7 @@ public class ResultData : INotifyPropertyChanged
         }
     }
 
-    private string gender = string.Empty;
+    private string gender;
     public string Gender
     {
         get => gender;
@@ -71,7 +71,7 @@ public class ResultData : INotifyPropertyChanged
         }
     }
 
-    private string address = string.Empty;
+    private string address;
     public string Address
     {
         get => address;
@@ -82,7 +82,7 @@ public class ResultData : INotifyPropertyChanged
         }
     }
 
-    private string religion = string.Empty;
+    private string religion;
     public string Religion
     {
         get => religion;
@@ -93,7 +93,7 @@ public class ResultData : INotifyPropertyChanged
         }
     }
 
-    private string maritalStatus = string.Empty;
+    private string maritalStatus;
     public string MaritalStatus
     {
         get => maritalStatus;
@@ -104,7 +104,7 @@ public class ResultData : INotifyPropertyChanged
         }
     }
 
-    private string workStatus = string.Empty;
+    private string workStatus;
     public string WorkStatus
     {
         get => workStatus;
@@ -115,7 +115,7 @@ public class ResultData : INotifyPropertyChanged
         }
     }
 
-    private string nationality = string.Empty;
+    private string nationality;
     public string Nationality
     {
         get => nationality;
@@ -126,7 +126,7 @@ public class ResultData : INotifyPropertyChanged
         }
     }
 
-    private string imagePath = string.Empty;
+    private string imagePath;
     public string ImagePath
     {
         get => imagePath;
@@ -154,7 +154,7 @@ public class ResultData : INotifyPropertyChanged
         }
     }
 
-    public event PropertyChangedEventHandler? PropertyChanged;
+    public event PropertyChangedEventHandler PropertyChanged;
     protected void OnPropertyChanged(string propertyName)
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));

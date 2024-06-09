@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
@@ -92,6 +93,8 @@ namespace WpfApp
             UpdateMessage("mAP DAH KEKUMPUL");
 
             string name = "";
+            long execution = 0;
+            double bestLevenshteinSimilarity = 0;
 
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
@@ -106,7 +109,7 @@ namespace WpfApp
                     string asciiBlock1 = ImageProcessor.ExtractCentralAsciiBlock2(asciiStrings1, 30);
 
                     int bestMatchPosition = -1;
-                    double bestLevenshteinSimilarity = 0;
+                    bestLevenshteinSimilarity = 0;
 
                     foreach (string imagePath2 in imagePathsFromDatabase)
                     {
@@ -167,6 +170,7 @@ namespace WpfApp
                         Console.WriteLine("Match found at position: " + bestMatchPosition);
                         Console.WriteLine("Matching image path: " + bestMatchImagePath);
                         name = DatabaseManager.GetNameFromImagePath(bestMatchImagePath);
+                        bestLevenshteinSimilarity = 100;
                     }
                     else
                     {
@@ -201,10 +205,15 @@ namespace WpfApp
                 }
 
                 stopwatch.Stop();
+                execution = stopwatch.ElapsedMilliseconds;
                 Console.WriteLine($"Time taken: {stopwatch.ElapsedMilliseconds} ms");
             });
 
             UpdateMessage("Search Complete!");
+            dynamicMessage.Text = "Search Complete!";
+            matchFoundMessage.Visibility = Visibility.Visible;
+            executionTimeMessage.Text = $"{execution} ms";
+            similarityPercentageMessage.Text = $"{bestLevenshteinSimilarity:F2}%";
             ShowSearchResults(true, data, bestMatchImagePath);
         }
 
@@ -240,10 +249,16 @@ namespace WpfApp
                     MaritalStatus = biodata.StatusPerkawinan,
                     WorkStatus = biodata.Pekerjaan,
                     Nationality = biodata.Kewarganegaraan,
-                    ImagePath = ImagePathResult
+                    ImagePath = Path.GetFullPath(ImagePathResult)
+                //     ExecutionTime = $"{elapsedMilliseconds} ms",
+                // SimilarityPercentage = bestLevenshteinSimilarity == 1.0 ? "100%" : $"{bestLevenshteinSimilarity:F2}%"x`x`
                 };
 
-                rightPanel.DataContext = resultData;
+                var panel = FindName("rightPanel") as StackPanel;
+                if (panel != null)
+                {
+                    panel.DataContext = resultData;
+                }
             });
         }
     }

@@ -16,11 +16,11 @@
             "console": "internalConsole"
         },
         {
-            "name": ".NET Core Launch (console)",
+            "name": ".NET Core Launch (console) gui",
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceFolder}/src/bin/Debug/net8.0-windows/FingerprintCheck.dll",
+            "program": "${workspaceFolder}/src/bin/Debug/net8.0-windows/src.dll",
             "args": [],
             "cwd": "${workspaceFolder}/src",
             "console": "internalConsole",
